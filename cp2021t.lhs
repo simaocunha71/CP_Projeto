@@ -127,15 +127,14 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 999 (preencher)
+\textbf{Grupo} nr. & 21 
 \\\hline
-a11111 & Nome1 (preencher)	
+a93262 & Simão Pedro Sá Cunha
 \\
-a22222 & Nome2 (preencher)	
+a93277 & Tiago Luis Dias Silva	
 \\
-a33333 & Nome3 (preencher)	
+a93270 & 	João Nuno Pereira Barbosa 
 \\
-a44444 & Nome4 (preencher, se aplicável, ou apagar)	
 \end{tabular}
 \end{center}
 
@@ -702,6 +701,7 @@ Verifique as suas funções testando a propriedade seguinte:
 A média de uma lista não vazia e de uma \LTree\ com os mesmos elementos coincide,
 a menos de um erro de 0.1 milésimas:
 \begin{code}
+prop_avg :: Ord a => [a] -> Property
 prop_avg = nonempty .==>. diff .<=. const 0.000001 where
    diff l = avg l - (avgLTree . genLTree) l
    genLTree = anaLTree lsplit
