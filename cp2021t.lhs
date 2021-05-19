@@ -127,14 +127,15 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 21 
+\textbf{Grupo} nr. & 999 (preencher)
 \\\hline
-a93262 & Simão Pedro Sá Cunha
+a11111 & Nome1 (preencher)	
 \\
-a93277 & Tiago Luis Dias Silva	
+a22222 & Nome2 (preencher)	
 \\
-a93270 & 	João Nuno Pereira Barbosa 
+a33333 & Nome3 (preencher)	
 \\
+a44444 & Nome4 (preencher, se aplicável, ou apagar)	
 \end{tabular}
 \end{center}
 
@@ -192,6 +193,7 @@ o ``kit'' básico, escrito em \Haskell, para realizar o trabalho. Basta executar
 \begin{code}
 {-# OPTIONS_GHC -XNPlusKPatterns #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving, DeriveDataTypeable, FlexibleInstances #-}
+{-# OPTIONS_GHC -Wno-deferred-type-errors #-}
 module Main where 
 import Cp
 import List hiding (fac)
@@ -702,7 +704,8 @@ A média de uma lista não vazia e de uma \LTree\ com os mesmos elementos coinci
 a menos de um erro de 0.1 milésimas:
 \begin{code}
 prop_avg :: Ord a => [a] -> Property
-prop_avg = nonempty .==>. diff .<=. const 0.000001 where
+prop_avg = nonempty .==>. diff .<=. const 0.000001 
+  where
    diff l = avg l - (avgLTree . genLTree) l
    genLTree = anaLTree lsplit
    nonempty = (>[])
@@ -1017,9 +1020,13 @@ ad v = p2 . cataExpAr (ad_gen v)
 Definir:
 
 \begin{code}
-outExpAr = undefined 
+outExpAr :: ExpAr a-> Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a)))
+outExpAr X = i1 ()
+outExpAr (N x) = i2 (i1 x)
+outExpAr (Bin op exp1 exp2) = i2 (i2 (i1 (op ,(exp1, exp2))))
+outExpAr (Un op exp1) = i2 (i2 (i2 (op, exp1)))
 ---
-recExpAr = undefined
+recExpAr f = baseExpAr id id id id id id f
 ---
 g_eval_exp = undefined
 ---

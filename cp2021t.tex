@@ -305,14 +305,15 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 21 
+\textbf{Grupo} nr. & 999 (preencher)
 \\\hline
-a93262 & Simão Pedro Sá Cunha
+a11111 & Nome1 (preencher)	
 \\
-a93277 & Tiago Luis Dias Silva	
+a22222 & Nome2 (preencher)	
 \\
-a93270 & 	João Nuno Pereira Barbosa 
+a33333 & Nome3 (preencher)	
 \\
+a44444 & Nome4 (preencher, se aplicável, ou apagar)	
 \end{tabular}
 \end{center}
 
@@ -1039,19 +1040,23 @@ A média de uma lista não vazia e de uma \LTree\ com os mesmos elementos coinci
 a menos de um erro de 0.1 milésimas:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{prop\char95 avg}\mathbin{::}\Conid{Ord}\;\Varid{a}\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Conid{Property}{}\<[E]%
 \\
-\>[B]{}\Varid{prop\char95 avg}\mathrel{=}\Varid{nonempty}\Rightarrow\Varid{diff}\leq\underline{\mathrm{0.000001}}\;\mathbf{where}{}\<[E]%
+\>[B]{}\Varid{prop\char95 avg}\mathrel{=}\Varid{nonempty}\Rightarrow\Varid{diff}\leq\underline{\mathrm{0.000001}}{}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{1}{}\<[4]%
 \>[4]{}\Varid{diff}\;\Varid{l}\mathrel{=}\Varid{avg}\;\Varid{l}\mathbin{-}(\Varid{avgLTree}\comp \Varid{genLTree})\;\Varid{l}{}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
+\>[3]{}\hsindent{1}{}\<[4]%
 \>[4]{}\Varid{genLTree}\mathrel{=}\mathopen{[\!(}\Varid{lsplit}\mathclose{)\!]}{}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
+\>[3]{}\hsindent{1}{}\<[4]%
 \>[4]{}\Varid{nonempty}\mathrel{=}(\mathbin{>}[\mskip1.5mu \mskip1.5mu]){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
@@ -1557,11 +1562,19 @@ Definir:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{outExpAr}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{outExpAr}\mathbin{::}\Conid{ExpAr}\;\Varid{a}\to ()+(\Varid{a}+((\Conid{BinOp},(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}))+(\Conid{UnOp},\Conid{ExpAr}\;\Varid{a}))){}\<[E]%
+\\
+\>[B]{}\Varid{outExpAr}\;\Conid{X}\mathrel{=}i_1\;(){}\<[E]%
+\\
+\>[B]{}\Varid{outExpAr}\;(\Conid{N}\;\Varid{x})\mathrel{=}i_2\;(i_1\;\Varid{x}){}\<[E]%
+\\
+\>[B]{}\Varid{outExpAr}\;(\Conid{Bin}\;\Varid{op}\;\Varid{exp1}\;\Varid{exp2})\mathrel{=}i_2\;(i_2\;(i_1\;(\Varid{op},(\Varid{exp1},\Varid{exp2})))){}\<[E]%
+\\
+\>[B]{}\Varid{outExpAr}\;(\Conid{Un}\;\Varid{op}\;\Varid{exp1})\mathrel{=}i_2\;(i_2\;(i_2\;(\Varid{op},\Varid{exp1}))){}\<[E]%
 \\
 \>[B]{}\mbox{\onelinecomment }{}\<[E]%
 \\
-\>[B]{}\Varid{recExpAr}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{recExpAr}\;\Varid{f}\mathrel{=}\Varid{baseExpAr}\;\Varid{id}\;\Varid{id}\;\Varid{id}\;\Varid{id}\;\Varid{id}\;\Varid{id}\;\Varid{f}{}\<[E]%
 \\
 \>[B]{}\mbox{\onelinecomment }{}\<[E]%
 \\

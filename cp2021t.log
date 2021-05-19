@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.2)  2 MAY 2021 18:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.2)  19 MAY 2021 15:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -662,40 +662,40 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
 
-LaTeX Warning: Citation `Kn92' on page 1 undefined on input line 339.
+LaTeX Warning: Citation `Kn92' on page 1 undefined on input line 340.
 
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 3
-47.
+48.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (5.29178pt too wide) in paragraph at lines 384--387
+Overfull \hbox (5.29178pt too wide) in paragraph at lines 385--388
 []\OT1/ppl/m/n/10 Recomenda-se uma abordagem participativa dos membros do grupo
  de trabalho por forma a poderem
  []
 
 
-LaTeX Warning: Reference `sec:resolucao' on page 2 undefined on input line 389.
+LaTeX Warning: Reference `sec:resolucao' on page 2 undefined on input line 390.
 
 
 
-LaTeX Warning: Reference `sec:codigo' on page 2 undefined on input line 418.
+LaTeX Warning: Reference `sec:codigo' on page 2 undefined on input line 419.
 
 LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 4
-28.
+29.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )
-Overfull \hbox (9.59102pt too wide) in paragraph at lines 445--449
+Overfull \hbox (9.59102pt too wide) in paragraph at lines 446--450
 \OT1/ppl/m/n/10 Os \OT1/ppl/m/it/10 tipos de dados alg^^Sebricos \OT1/ppl/m/n/1
 0 estudados ao longo desta disciplina oferecem uma grande capacidade expressiva
 
  []
 
 [2]
-Overfull \hbox (6.65025pt too wide) in paragraph at lines 463--468
+Overfull \hbox (6.65025pt too wide) in paragraph at lines 464--469
 \OT1/ppl/m/n/10 descontrolada, levando a um c[]alculo pouco eficiente. \OT1/ppl
 /m/it/10 Automatic differentiation \OT1/ppl/m/n/10 tenta resolver este problema
 ,
@@ -710,7 +710,7 @@ Overfull \hbox (6.65025pt too wide) in paragraph at lines 463--468
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (6.3199pt too wide) in paragraph at lines 559--562
+Overfull \hbox (6.3199pt too wide) in paragraph at lines 560--563
 []$[]$ \OT1/ppl/m/it/10 e $[]$ s~ao testemunhas de um isomorfismo, isto ^^Se, $
 [] []
  []
@@ -719,7 +719,7 @@ Overfull \hbox (6.3199pt too wide) in paragraph at lines 559--562
 
 [3]
 
-LaTeX Warning: Reference `pg:P1' on page 4 undefined on input line 583.
+LaTeX Warning: Reference `pg:P1' on page 4 undefined on input line 584.
 
 \openout5 = `cp2021t.ptb'.
 
@@ -728,12 +728,12 @@ LaTeX Warning: Reference `pg:P1' on page 4 undefined on input line 583.
 \openout5 = `cp2021t.ptb'.
 
 
-LaTeX Warning: Reference `pg:P1' on page 4 undefined on input line 651.
+LaTeX Warning: Reference `pg:P1' on page 4 undefined on input line 652.
 
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (1.88171pt too wide) in paragraph at lines 667--671
+Overfull \hbox (1.88171pt too wide) in paragraph at lines 668--672
 []\OT1/ppl/m/n/10 Para calcular a derivada de uma express[]ao, []e necess[]ario
  aplicar transforma[][]oes []a express[]ao original
  []
@@ -747,24 +747,24 @@ Overfull \hbox (1.88171pt too wide) in paragraph at lines 667--671
 
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 763.
+Package hyperref Warning: Suppressing link with empty target on input line 764.
 
 
 
-LaTeX Warning: Citation `Ol18' on page 5 undefined on input line 763.
+LaTeX Warning: Citation `Ol18' on page 5 undefined on input line 764.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 763.
+Package hyperref Warning: Suppressing link with empty target on input line 764.
 
 
 
-Overfull \hbox (17.15103pt too wide) in paragraph at lines 761--764
+Overfull \hbox (17.15103pt too wide) in paragraph at lines 762--765
 \OT1/ppl/m/n/10 Nesta disciplina estudou-se como fazer [][]programa[][]ao din[]
 amica[][][] por c[]alculo, recorrendo []a lei de recursividade
  []
 
 LaTeX Font Info:    Trying to load font information for OT1+phv on input line 7
-70.
+71.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
@@ -773,13 +773,13 @@ File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 \openout5 = `cp2021t.ptb'.
 
  [5]
-Overfull \hbox (5.61159pt too wide) in paragraph at lines 801--804
+Overfull \hbox (5.61159pt too wide) in paragraph at lines 802--805
 []\OT1/ppl/m/n/10 Para as vari[]aveis escolhem-se os pr[]oprios nomes das fun[]
 []oes, pela ordem que se achar conveniente.[][][][][] 
  []
 
 
-LaTeX Warning: Citation `Ol18' on page 6 undefined on input line 809.
+LaTeX Warning: Citation `Ol18' on page 6 undefined on input line 810.
 
 \openout5 = `cp2021t.ptb'.
 
@@ -790,13 +790,13 @@ LaTeX Warning: Citation `Ol18' on page 6 undefined on input line 809.
 \openout5 = `cp2021t.ptb'.
 
 
-LaTeX Warning: Reference `sec:recmul' on page 6 undefined on input line 866.
+LaTeX Warning: Reference `sec:recmul' on page 6 undefined on input line 867.
 
 <cp2021t_media/Bezier_curves.png, id=107, 433.62pt x 180.675pt>
 File: cp2021t_media/Bezier_curves.png Graphic file (type png)
 <use cp2021t_media/Bezier_curves.png>
-Package pdftex.def Info: cp2021t_media/Bezier_curves.png  used on input line 87
-9.
+Package pdftex.def Info: cp2021t_media/Bezier_curves.png  used on input line 88
+0.
 (pdftex.def)             Requested size: 364.19667pt x 151.75493pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -807,7 +807,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (23.14105pt too wide) in paragraph at lines 920--923
+Overfull \hbox (23.14105pt too wide) in paragraph at lines 921--924
 \OT1/ppl/m/n/10 Por exemplo, um ponto de 2 dimens[]oes e um ponto de 3 dimens[]
 oes podem ser representados, respetivamente,
  []
@@ -817,14 +817,14 @@ oes podem ser representados, respetivamente,
 \openout5 = `cp2021t.ptb'.
 
 
-LaTeX Warning: Reference `sec:codigo' on page 7 undefined on input line 941.
+LaTeX Warning: Reference `sec:codigo' on page 7 undefined on input line 942.
 
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (0.10011pt too wide) in paragraph at lines 961--963
+Overfull \hbox (0.10011pt too wide) in paragraph at lines 962--964
 []\OT1/ppl/m/n/10 Implemente $[]$ como um catamorfismo de listas, testando a su
 a defini[][]ao com a propriedade:[] 
  []
@@ -838,29 +838,29 @@ a defini[][]ao com a propriedade:[]
 
 
 
-LaTeX Warning: Reference `sec:resolucao' on page 8 undefined on input line 1065
+LaTeX Warning: Reference `sec:resolucao' on page 8 undefined on input line 1070
 .
 
 [8]
 
-LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1075.
+LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1080.
 
 <xymatrix 2x2 191>
 
-Package hyperref Warning: Suppressing link with empty target on input line 1109
+Package hyperref Warning: Suppressing link with empty target on input line 1114
 .
 
 
-LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1110.
+LaTeX Warning: Citation `Ol18' on page 9 undefined on input line 1115.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 1110
+Package hyperref Warning: Suppressing link with empty target on input line 1115
 .
 
 \openout5 = `cp2021t.ptb'.
 
 
-LaTeX Warning: Reference `pg:regra' on page 9 undefined on input line 1140.
+LaTeX Warning: Reference `pg:regra' on page 9 undefined on input line 1145.
 
 \openout5 = `cp2021t.ptb'.
 
@@ -868,7 +868,7 @@ LaTeX Warning: Reference `pg:regra' on page 9 undefined on input line 1140.
 
 [9]
 
-LaTeX Warning: Reference `eq:cat' on page 10 undefined on input line 1175.
+LaTeX Warning: Reference `eq:cat' on page 10 undefined on input line 1180.
 
 \openout5 = `cp2021t.ptb'.
 
@@ -895,77 +895,77 @@ LaTeX Warning: Reference `eq:cat' on page 10 undefined on input line 1175.
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][][][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][][][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][] 
  []
 
 
-Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
+Overfull \hbox (8.57883pt too wide) in paragraph at lines 1432--1481
  [][] 
  []
 
@@ -979,21 +979,19 @@ Overfull \hbox (8.57883pt too wide) in paragraph at lines 1427--1476
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (103.62514pt too wide) in paragraph at lines 1580--1591
+Overfull \hbox (103.62514pt too wide) in paragraph at lines 1593--1604
  [][] 
  []
 
 
-Overfull \hbox (103.62514pt too wide) in paragraph at lines 1580--1591
+Overfull \hbox (103.62514pt too wide) in paragraph at lines 1593--1604
  [][][][] 
  []
 
 
-Overfull \hbox (103.62514pt too wide) in paragraph at lines 1580--1591
+Overfull \hbox (103.62514pt too wide) in paragraph at lines 1593--1604
  [][] 
  []
-
-\openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
 
@@ -1008,15 +1006,17 @@ Overfull \hbox (103.62514pt too wide) in paragraph at lines 1580--1591
 [13]
 \openout5 = `cp2021t.ptb'.
 
+\openout5 = `cp2021t.ptb'.
+
 
 No file cp2021t.ind.
 No file cp2021t.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1697.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1710.
 [14]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1697.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1710.
  (./cp2021t.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1697.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1697.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1710.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1710.
 
 
 
@@ -1033,12 +1033,12 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1697.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1710.
  ) 
 Here is how much of TeX's memory you used:
  13294 strings out of 483107
  193245 string characters out of 5964631
- 523381 words of memory out of 5000000
+ 522381 words of memory out of 5000000
  27914 multiletter control sequences out of 15000+600000
  567979 words of font info for 125 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
@@ -1069,7 +1069,7 @@ exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/xypic/xyatip10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypi
 c/xybtip10.pfb>
-Output written on cp2021t.pdf (14 pages, 329226 bytes).
+Output written on cp2021t.pdf (14 pages, 329376 bytes).
 PDF statistics:
  321 PDF objects out of 1000 (max. 8388607)
  273 compressed objects within 3 object streams
