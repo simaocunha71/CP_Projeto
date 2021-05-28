@@ -127,15 +127,14 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 999 (preencher)
+\textbf{Grupo} nr. & 21 
 \\\hline
-a11111 & Nome1 (preencher)	
+a93270 & João Barbosa
 \\
-a22222 & Nome2 (preencher)	
+a93262 & Simão Cunha 	
 \\
-a33333 & Nome3 (preencher)	
-\\
-a44444 & Nome4 (preencher, se aplicável, ou apagar)	
+a93277 & Tiago Silva 
+
 \end{tabular}
 \end{center}
 
@@ -1026,7 +1025,7 @@ outExpAr (N x) = i2 (i1 x)
 outExpAr (Bin op exp1 exp2) = i2 (i2 (i1 (op ,(exp1, exp2))))
 outExpAr (Un op exp1) = i2 (i2 (i2 (op, exp1)))
 ---
-recExpAr f = baseExpAr id id id id id id f
+recExpAr f = baseExpAr id id id f f id f
 ---
 g_eval_exp = undefined
 ---
