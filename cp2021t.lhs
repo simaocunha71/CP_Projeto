@@ -1027,7 +1027,14 @@ outExpAr (Un op exp1) = i2 (i2 (i2 (op, exp1)))
 ---
 recExpAr f = baseExpAr id id id f f id f
 ---
-g_eval_exp = undefined
+g_eval_exp var = either g1 (either g2 (either g3 g4)) 
+                where
+                  g1 () = var
+                  g2 b = b
+                  g3 (op,(a1,a2)) |op == Sum = a1 + a2
+                                  |otherwise = a1 * a2
+                  g4 (op,a1) | op == Negate = (-1)*a1
+                             | otherwise = Prelude.exp(a1)
 ---
 clean = undefined
 ---

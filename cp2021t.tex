@@ -1560,6 +1560,10 @@ Definir:
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{outExpAr}\mathbin{::}\Conid{ExpAr}\;\Varid{a}\to ()+(\Varid{a}+((\Conid{BinOp},(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}))+(\Conid{UnOp},\Conid{ExpAr}\;\Varid{a}))){}\<[E]%
 \\
@@ -1577,7 +1581,28 @@ Definir:
 \\
 \>[B]{}\mbox{\onelinecomment }{}\<[E]%
 \\
-\>[B]{}\Varid{g\char95 eval\char95 exp}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{var}\mathrel{=}\alt{\Varid{g1}}{\alt{\Varid{g2}}{\alt{\Varid{g3}}{\Varid{g4}}}}{}\<[E]%
+\\
+\>[B]{}\hsindent{17}{}\<[17]%
+\>[17]{}\mathbf{where}{}\<[E]%
+\\
+\>[17]{}\hsindent{2}{}\<[19]%
+\>[19]{}\Varid{g1}\;()\mathrel{=}\Varid{var}{}\<[E]%
+\\
+\>[17]{}\hsindent{2}{}\<[19]%
+\>[19]{}\Varid{g2}\;\Varid{b}\mathrel{=}\Varid{b}{}\<[E]%
+\\
+\>[17]{}\hsindent{2}{}\<[19]%
+\>[19]{}\Varid{g3}\;(\Varid{op},(\Varid{a1},\Varid{a2}))\mid \Varid{op}\equiv \Conid{Sum}\mathrel{=}\Varid{a1}\mathbin{+}\Varid{a2}{}\<[E]%
+\\
+\>[19]{}\hsindent{16}{}\<[35]%
+\>[35]{}\mid \Varid{otherwise}\mathrel{=}\Varid{a1}\mathbin{*}\Varid{a2}{}\<[E]%
+\\
+\>[17]{}\hsindent{2}{}\<[19]%
+\>[19]{}\Varid{g4}\;(\Varid{op},\Varid{a1})\mid \Varid{op}\equiv \Conid{Negate}\mathrel{=}(\mathbin{-}\mathrm{1})\mathbin{*}\Varid{a1}{}\<[E]%
+\\
+\>[19]{}\hsindent{11}{}\<[30]%
+\>[30]{}\mid \Varid{otherwise}\mathrel{=}\Varid{\Conid{Prelude}.exp}\;(\Varid{a1}){}\<[E]%
 \\
 \>[B]{}\mbox{\onelinecomment }{}\<[E]%
 \\
