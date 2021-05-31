@@ -1027,14 +1027,14 @@ outExpAr (Un op exp1) = i2 (i2 (i2 (op, exp1)))
 ---
 recExpAr f = baseExpAr id id id f f id f
 ---
-g_eval_exp var = either g1 (either g2 (either g3 g4)) 
+g_eval_exp var = either g_eval_x (either g_eval_na (either g_eval_binop g_eval_unop)) 
                 where
-                  g1 () = var
-                  g2 b = b
-                  g3 (op,(a1,a2)) |op == Sum = a1 + a2
-                                  |otherwise = a1 * a2
-                  g4 (op,a1) | op == Negate = (-1)*a1
-                             | otherwise = Prelude.exp(a1)
+                  g_eval_x () = var
+                  g_eval_na b = b
+                  g_eval_binop (op,(a1,a2)) |op == Sum = a1 + a2
+                                            |otherwise = a1 * a2
+                  g_eval_unop (op,a1) | op == Negate = (-1)*a1
+                                      | otherwise = Prelude.exp(a1)
 ---
 clean = undefined
 ---
@@ -1054,9 +1054,9 @@ ad_gen = undefined
 \subsection*{Problema 2}
 Definir
 \begin{code}
-loop = undefined
-inic = undefined
-prj = undefined
+loop (f, b, c) = ((f * b) `div` c, 4 + b, 1 + c)
+inic = (1, 2, 2)
+prj (a, b, c) = a
 \end{code}
 por forma a que
 \begin{code}

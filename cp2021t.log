@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.2)  28 MAY 2021 21:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.2)  31 MAY 2021 16:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1015,10 +1015,10 @@ exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/xypic/xyatip10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypi
 c/xybtip10.pfb>
-Output written on cp2021t.pdf (16 pages, 337524 bytes).
+Output written on cp2021t.pdf (16 pages, 337906 bytes).
 PDF statistics:
- 433 PDF objects out of 1000 (max. 8388607)
- 382 compressed objects within 4 object streams
+ 434 PDF objects out of 1000 (max. 8388607)
+ 383 compressed objects within 4 object streams
  78 named destinations out of 1000 (max. 500000)
  70 words of extra memory for PDF output out of 10000 (max. 10000000)
 

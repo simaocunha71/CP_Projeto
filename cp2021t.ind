@@ -9,7 +9,8 @@
 
   \item Combinador ``pointfree''
     \subitem \emph  {cata}, \hyperpage{8, 9}
-    \subitem \emph  {either}, \hyperpage{3}, \hyperpage{8}
+    \subitem \emph  {either}, \hyperpage{3}, \hyperpage{8}, 
+		\hyperpage{13}
   \item Curvas de Bézier, \hyperpage{6, 7}
   \item Cálculo de Programas, \hyperpage{1, 2}, \hyperpage{5}
     \subitem Material Pedagógico, \hyperpage{1}
