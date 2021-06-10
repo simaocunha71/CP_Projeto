@@ -1042,8 +1042,9 @@ gopt = undefined
 \end{code}
 
 \begin{code}
-sd_gen :: Floating a =>
-    Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
+sd_gen :: Floating a => 
+          Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) 
+          -> (ExpAr a, ExpAr a)
 sd_gen = undefined
 \end{code}
 
@@ -1054,9 +1055,9 @@ ad_gen = undefined
 \subsection*{Problema 2}
 Definir
 \begin{code}
-loop (f, b, c) = ((f * b) `div` c, 4 + b, 1 + c)
-inic = (1, 2, 2)
-prj (a, b, c) = a
+loop (f, h, b, c) = (c*h,b/c,4+b, 1+c)
+inic = (1, 1, 6, 3)
+prj (a, b, c, d) = a
 \end{code}
 por forma a que
 \begin{code}
@@ -1065,6 +1066,89 @@ cat = prj . (for loop inic)
 seja a função pretendida.
 \textbf{NB}: usar divisão inteira.
 Apresentar de seguida a justificação da solução encontrada.
+\par
+Para uma simplificação de cálculos, decidimos utilizar como fórmula para os números de Catalan:
+
+$$ \left\{
+\begin{array}{lr}
+C_0 = 1\\
+C_{n+1} = \frac{2(2n+1)}{n+2} C_n\\
+\end{array}
+\right. $$
+
+que pode ser deduzida em \catalan 1. \par
+
+Assim sendo, vamos começar a desmontar estas duas equações:
+
+$$ \left\{
+\begin{array}{lr}
+C(0) = 1\\
+C(n+1) = (h(n) / r(n)) * C(n) \\
+\end{array}
+\right. $$
+
+$$ \left\{
+\begin{array}{lr}
+h(0) = 2\\
+h(n) = 2(2n+1)\\
+h(n+1) = 2(2(n+1)+1)
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+h(0) = 2\\
+h(n) = 4n+2\\
+h(n+1) = 2(2n+2+1)
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+h(0) = 2\\
+h(n) = 4n+2\\
+h(n+1) = 4n+2+4
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+h(0) = 2\\
+h(n) = 4n+2\\
+h(n+1) = h(n)+4
+\end{array}
+\right. $$
+
+$$ \left\{
+\begin{array}{lr}
+r(0) = 2\\
+r(n) = (n+2)\\
+r(n+1) = (n+1)+2
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+r(0) = 2\\
+r(n) = (n+2)\\ 
+r(n+1) = n+2+1
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+r(0) = 2\\
+r(n) = (n+2)\\ 
+r(n+1) = r(n)+1
+\end{array}
+\right. $$
+
+Agora estamos em condições de responder ao enunciado. \par
+A função \textit{init} irá ser constituída por um triplo, onde cada campo vai ser constiuído pelo valor obtido no caso de paragem da função c, h e r, respetivamente.\par
+A função \textit{loop} irá ser constiuída por um triplo, onde em cada campo irá estar a função c, h e r, respetivamente.\par
+Por último, a função \textit{proj} será constituída por um triplo com as funções utilizadas, projetando a função c que contém o resultado pretendido (i.e. o n-ésimo número de Catalan). \par
+
+
 
 \subsection*{Problema 3}
 
@@ -1084,6 +1168,82 @@ hyloAlgForm = undefined
 \subsection*{Problema 4}
 
 Solução para listas não vazias:
+
+Antes de descobrir o avg\textunderscore aux, será necessário transformar [b,q] num \textit{split} de funções para podermos aplicar a lei da troca (Lei 28).
+
+
+\begin{eqnarray*}
+\start
+	|either b q|
+%
+\just\equiv{ Lei 1 - Natural-id }
+%
+     |id . either b q|
+%
+\just\equiv{ Lei 8 - Reflexão-X }
+%
+     |(split p1 p2 ) . (either b q)|
+%
+\just\equiv{ Lei 20 - Fusão + }
+%
+     |either ((split p1 p2). b) ((split p1 p2). q)|
+%
+\just\equiv{ Lei 9 - Fusão X}
+%
+     |either (split (p1 . b) (p2 . b)) (split (p1 . q) (p2 . q))|
+%
+\just\equiv{ Lei 28 - Lei da troca}
+%
+     |split (either (p1 . b) (p1 . q)) (either (p2 . b) (p2 . q))|
+\qed
+\end{eqnarray*}
+
+Assim, vamos então determinar avg\textunderscore aux:
+\begin{eqnarray*}
+\start
+	|avg_aux = cata (split b q)|
+%
+\just\equiv{ Definição de avg\textunderscore aux}
+%
+     |split avg length = cata (split b q)|
+%
+\just\equiv{ Resultado calculado em cima }
+%
+     |split avg length = cata (split (either (p1 . b) (p1 . q)) (either (p2 . b) (p2 . q)))|
+%
+\just\equiv{ Lei 20 - Fusão + }
+%
+     |either ((split p1 p2). b) ((split p1 p2). q)|
+%
+\just\equiv{ Lei 52 - Fokkinga e Functor das listas: F f = id + id x f}
+%
+     |lcbr(
+     avg.in = either (p1 . b) (p1 . q) . (id+id >< split avg length)
+     )(
+     length.in = either (p2 . b) (p2 . q) . (id+id >< split avg length)
+     )|
+%
+\just\equiv{ Definição de in para as listas ([nil,cons]) e Lei 22 - Absorção +}
+%
+     |lcbr(
+     either (avg . nil) (avg . cons) = either (p1 . b . id) (p1 . q . id >< split avg aux) 
+     )(
+     either (length . nil) (length . cons) = either (p2 . b . id) (p2 . q . id >< split avg aux) 
+     )|
+%
+\just\equiv{ Lei 27 - Eq +, 2 vezes; Lei 1, Natural-id}
+%
+     |lcbr(
+     avg . nil = p1 . b 
+     )(
+     avg . cons = p1 . q >< split avg length
+     )||lcbr(
+     length . nil = p2 . b 
+     )(
+     length . cons = p2 . q >< split avg length
+     )|
+\qed
+\end{eqnarray*}
 \begin{code}
 avg = p1.avg_aux
 \end{code}

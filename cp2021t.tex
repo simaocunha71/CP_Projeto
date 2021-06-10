@@ -1616,12 +1616,15 @@ Definir:
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{sd\char95 gen}\mathbin{::}\Conid{Floating}\;\Varid{a}\Rightarrow {}\<[E]%
 \\
-\>[B]{}\hsindent{5}{}\<[5]%
-\>[5]{}()+(\Varid{a}+((\Conid{BinOp},((\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}),(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a})))+(\Conid{UnOp},(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}))))\to (\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}){}\<[E]%
+\>[B]{}\hsindent{11}{}\<[11]%
+\>[11]{}()+(\Varid{a}+((\Conid{BinOp},((\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}),(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a})))+(\Conid{UnOp},(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a})))){}\<[E]%
+\\
+\>[B]{}\hsindent{11}{}\<[11]%
+\>[11]{}\to (\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}){}\<[E]%
 \\
 \>[B]{}\Varid{sd\char95 gen}\mathrel{=}\bot {}\<[E]%
 \ColumnHook
@@ -1639,11 +1642,11 @@ Definir
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{loop}\;(\Varid{f},\Varid{b},\Varid{c})\mathrel{=}((\Varid{f}\mathbin{*}\Varid{b})\mathbin{\Varid{`div`}}\Varid{c},\mathrm{4}\mathbin{+}\Varid{b},\mathrm{1}\mathbin{+}\Varid{c}){}\<[E]%
+\>[B]{}\Varid{loop}\;(\Varid{f},\Varid{h},\Varid{b},\Varid{c})\mathrel{=}(\Varid{c}\mathbin{*}\Varid{h},\Varid{b}\mathbin{/}\Varid{c},\mathrm{4}\mathbin{+}\Varid{b},\mathrm{1}\mathbin{+}\Varid{c}){}\<[E]%
 \\
-\>[B]{}\Varid{inic}\mathrel{=}(\mathrm{1},\mathrm{2},\mathrm{2}){}\<[E]%
+\>[B]{}\Varid{inic}\mathrel{=}(\mathrm{1},\mathrm{1},\mathrm{6},\mathrm{3}){}\<[E]%
 \\
-\>[B]{}\Varid{prj}\;(\Varid{a},\Varid{b},\Varid{c})\mathrel{=}\Varid{a}{}\<[E]%
+\>[B]{}\Varid{prj}\;(\Varid{a},\Varid{b},\Varid{c},\Varid{d})\mathrel{=}\Varid{a}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 por forma a que
@@ -1656,6 +1659,89 @@ por forma a que
 seja a função pretendida.
 \textbf{NB}: usar divisão inteira.
 Apresentar de seguida a justificação da solução encontrada.
+\par
+Para uma simplificação de cálculos, decidimos utilizar como fórmula para os números de Catalan:
+
+$$ \left\{
+\begin{array}{lr}
+C_0 = 1\\
+C_{n+1} = \frac{2(2n+1)}{n+2} C_n\\
+\end{array}
+\right. $$
+
+que pode ser deduzida em \catalan 1. \par
+
+Assim sendo, vamos começar a desmontar estas duas equações:
+
+$$ \left\{
+\begin{array}{lr}
+C(0) = 1\\
+C(n+1) = (h(n) / r(n)) * C(n) \\
+\end{array}
+\right. $$
+
+$$ \left\{
+\begin{array}{lr}
+h(0) = 2\\
+h(n) = 2(2n+1)\\
+h(n+1) = 2(2(n+1)+1)
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+h(0) = 2\\
+h(n) = 4n+2\\
+h(n+1) = 2(2n+2+1)
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+h(0) = 2\\
+h(n) = 4n+2\\
+h(n+1) = 4n+2+4
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+h(0) = 2\\
+h(n) = 4n+2\\
+h(n+1) = h(n)+4
+\end{array}
+\right. $$
+
+$$ \left\{
+\begin{array}{lr}
+r(0) = 2\\
+r(n) = (n+2)\\
+r(n+1) = (n+1)+2
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+r(0) = 2\\
+r(n) = (n+2)\\ 
+r(n+1) = n+2+1
+\end{array}
+\right. $$
+\equiv
+$$ \left\{
+\begin{array}{lr}
+r(0) = 2\\
+r(n) = (n+2)\\ 
+r(n+1) = r(n)+1
+\end{array}
+\right. $$
+
+Agora estamos em condições de responder ao enunciado. \par
+A função \textit{init} irá ser constituída por um triplo, onde cada campo vai ser constiuído pelo valor obtido no caso de paragem da função c, h e r, respetivamente.\par
+A função \textit{loop} irá ser constiuída por um triplo, onde em cada campo irá estar a função c, h e r, respetivamente.\par
+Por último, a função \textit{proj} será constituída por um triplo com as funções utilizadas, projetando a função c que contém o resultado pretendido (i.e. o n-ésimo número de Catalan). \par
+
+
 
 \subsection*{Problema 3}
 
@@ -1687,6 +1773,66 @@ Apresentar de seguida a justificação da solução encontrada.
 \subsection*{Problema 4}
 
 Solução para listas não vazias:
+
+Antes de descobrir o avg\textunderscore aux, será necessário transformar [b,q] num \textit{split} de funções para podermos aplicar a lei da troca (Lei 28).
+
+
+\begin{eqnarray*}
+\start
+	\ensuremath{\alt{\Varid{b}}{\Varid{q}}}
+%
+\just\equiv{ Lei 1 - Natural-id }
+%
+     \ensuremath{\Varid{id}\comp \alt{\Varid{b}}{\Varid{q}}}
+%
+\just\equiv{ Lei 8 - Reflexão-X }
+%
+     \ensuremath{\conj{\p1}{\p2}\comp \alt{\Varid{b}}{\Varid{q}}}
+%
+\just\equiv{ Lei 20 - Fusão + }
+%
+     \ensuremath{\alt{\conj{\p1}{\p2}\comp \Varid{b}}{\conj{\p1}{\p2}\comp \Varid{q}}}
+%
+\just\equiv{ Lei 9 - Fusão X}
+%
+     \ensuremath{\alt{\conj{\p1\comp \Varid{b}}{\p2\comp \Varid{b}}}{\conj{\p1\comp \Varid{q}}{\p2\comp \Varid{q}}}}
+%
+\just\equiv{ Lei 28 - Lei da troca}
+%
+     \ensuremath{\conj{\alt{\p1\comp \Varid{b}}{\p1\comp \Varid{q}}}{\alt{\p2\comp \Varid{b}}{\p2\comp \Varid{q}}}}
+\qed
+\end{eqnarray*}
+
+Assim, vamos então determinar avg\textunderscore aux:
+\begin{eqnarray*}
+\start
+	\ensuremath{\Varid{avg\char95 aux}\mathrel{=}\cata{\conj{\Varid{b}}{\Varid{q}}}}
+%
+\just\equiv{ Definição de avg\textunderscore aux}
+%
+     \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\conj{\Varid{b}}{\Varid{q}}}}
+%
+\just\equiv{ Resultado calculado em cima }
+%
+     \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\conj{\alt{\p1\comp \Varid{b}}{\p1\comp \Varid{q}}}{\alt{\p2\comp \Varid{b}}{\p2\comp \Varid{q}}}}}
+%
+\just\equiv{ Lei 20 - Fusão + }
+%
+     \ensuremath{\alt{\conj{\p1}{\p2}\comp \Varid{b}}{\conj{\p1}{\p2}\comp \Varid{q}}}
+%
+\just\equiv{ Lei 52 - Fokkinga e Functor das listas: F f = id + id x f}
+%
+     \ensuremath{\begin{lcbr}\Varid{avg}\comp \mathbf{in}\mathrel{=}\alt{\p1\comp \Varid{b}}{\p1\comp \Varid{q}}\comp (\Varid{id}\mathbin{+}\Varid{id}\times\conj{\Varid{avg}}{\length })\\\length \comp \mathbf{in}\mathrel{=}\alt{\p2\comp \Varid{b}}{\p2\comp \Varid{q}}\comp (\Varid{id}\mathbin{+}\Varid{id}\times\conj{\Varid{avg}}{\length })\end{lcbr}}
+%
+\just\equiv{ Definição de in para as listas ([nil,cons]) e Lei 22 - Absorção +}
+%
+     \ensuremath{\begin{lcbr}\alt{\Varid{avg}\comp \Varid{nil}}{\Varid{avg}\comp \Varid{cons}}\mathrel{=}\alt{\p1\comp \Varid{b}\comp \Varid{id}}{\p1\comp \Varid{q}\comp \Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}}}\\\alt{\length \comp \Varid{nil}}{\length \comp \Varid{cons}}\mathrel{=}\alt{\p2\comp \Varid{b}\comp \Varid{id}}{\p2\comp \Varid{q}\comp \Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}}}\end{lcbr}}
+%
+\just\equiv{ Lei 27 - Eq +, 2 vezes; Lei 1, Natural-id}
+%
+     \ensuremath{\begin{lcbr}\Varid{avg}\comp \Varid{nil}\mathrel{=}\p1\comp \Varid{b}\\\Varid{avg}\comp \Varid{cons}\mathrel{=}\p1\comp \Varid{q}\times\conj{\Varid{avg}}{\length }\end{lcbr}\mid \begin{lcbr}\length \comp \Varid{nil}\mathrel{=}\p2\comp \Varid{b}\\\length \comp \Varid{cons}\mathrel{=}\p2\comp \Varid{q}\times\conj{\Varid{avg}}{\length }\end{lcbr}}
+\qed
+\end{eqnarray*}
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
