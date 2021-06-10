@@ -1055,9 +1055,9 @@ ad_gen = undefined
 \subsection*{Problema 2}
 Definir
 \begin{code}
-loop (f, h, b, c) = (c*h,b/c,4+b, 1+c)
-inic = (1, 1, 6, 3)
-prj (a, b, c, d) = a
+loop (f, b, c) = ((f * b) `div` c, 4 + b, 1 + c)
+inic = (1, 2, 2)
+prj (a, b, c) = a
 \end{code}
 por forma a que
 \begin{code}
