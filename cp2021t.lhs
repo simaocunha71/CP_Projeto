@@ -702,7 +702,7 @@ Verifique as suas funções testando a propriedade seguinte:
 A média de uma lista não vazia e de uma \LTree\ com os mesmos elementos coincide,
 a menos de um erro de 0.1 milésimas:
 \begin{code}
-prop_avg :: Ord a => [a] -> Property
+prop_avg :: [Double] -> Property 
 prop_avg = nonempty .==>. diff .<=. const 0.000001 
   where
    diff l = avg l - (avgLTree . genLTree) l
@@ -1225,19 +1225,16 @@ Antes de descobrir o avg\textunderscore aux, será necessário transformar [b,q]
 Assim, vamos então determinar avg\textunderscore aux:
 \begin{eqnarray*}
 \start
-	|avg_aux = cata (split b q)|
+	|avg_aux = cata (either b q)|
 %
 \just\equiv{ Definição de avg\textunderscore aux}
 %
-     |split avg length = cata (split b q)|
+     |split avg length = cata (either b q)|
 %
 \just\equiv{ Resultado calculado em cima }
 %
      |split avg length = cata (split (either (p1 . b) (p1 . q)) (either (p2 . b) (p2 . q)))|
 %
-\just\equiv{ Lei 20 - Fusão + }
-%
-     |either ((split p1 p2). b) ((split p1 p2). q)|
 %
 \just\equiv{ Lei 52 - Fokkinga e Functor das listas: F f = id + id x f}
 %
@@ -1250,9 +1247,9 @@ Assim, vamos então determinar avg\textunderscore aux:
 \just\equiv{ Definição de in para as listas ([nil,cons]) e Lei 22 - Absorção +}
 %
      |lcbr(
-     either (avg . nil) (avg . cons) = either (p1 . b . id) (p1 . q . id >< split avg aux) 
+     either (avg . nil) (avg . cons) = either (p1 . b . id) (p1 . q . (id >< split avg aux)) 
      )(
-     either (length . nil) (length . cons) = either (p2 . b . id) (p2 . q . id >< split avg aux) 
+     either (length . nil) (length . cons) = either (p2 . b . id) (p2 . q . (id >< split avg aux)) 
      )|
 %
 \just\equiv{ Lei 27 - Eq +, 2 vezes; Lei 1, Natural-id}
@@ -1260,11 +1257,11 @@ Assim, vamos então determinar avg\textunderscore aux:
      |lcbr(
      avg . nil = p1 . b 
      )(
-     avg . cons = p1 . q >< split avg length
+     avg . cons = p1 . q . (id >< split avg aux)
      )||lcbr(
      length . nil = p2 . b 
      )(
-     length . cons = p2 . q >< split avg length
+     length . cons = p2 . q . (id >< split avg aux)
      )|
 \qed
 \end{eqnarray*}
@@ -1273,12 +1270,15 @@ avg = p1.avg_aux
 \end{code}
 
 \begin{code}
-avg_aux = undefined
+avg_aux = cataList (either (const (0,0)) aux) where
+        aux (elem,(media,comprimento)) = ((elem + media * comprimento)/(comprimento+1),comprimento+1) 
+        
 \end{code}
 Solução para árvores de tipo \LTree:
 \begin{code}
 avgLTree = p1.cataLTree gene where
-   gene = undefined
+   gene = either (\l -> (l,1)) aux
+   aux ((md1, comp1), (md2,comp2)) = ((md1 * comp1 + comp2 * md2) / (comp1 + comp2), comp1 + comp2 )
 \end{code}
 
 \subsection*{Problema 5}

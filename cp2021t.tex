@@ -1042,7 +1042,7 @@ a menos de um erro de 0.1 milésimas:
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{prop\char95 avg}\mathbin{::}\Conid{Ord}\;\Varid{a}\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Conid{Property}{}\<[E]%
+\>[B]{}\Varid{prop\char95 avg}\mathbin{::}[\mskip1.5mu \Conid{Double}\mskip1.5mu]\to \Conid{Property}{}\<[E]%
 \\
 \>[B]{}\Varid{prop\char95 avg}\mathrel{=}\Varid{nonempty}\Rightarrow\Varid{diff}\leq\underline{\mathrm{0.000001}}{}\<[E]%
 \\
@@ -1605,18 +1605,41 @@ Definir:
 \>[39]{}\mid \Varid{otherwise}\mathrel{=}\Varid{\Conid{Prelude}.exp}\;(\Varid{a1}){}\<[E]%
 \\
 \>[B]{}\mbox{\onelinecomment }{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{clean}\mathbin{::}(\Conid{Floating}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{ExpAr}\;\Varid{a}\to ()+(\Varid{a}+((\Conid{BinOp},(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}))+(\Conid{UnOp},\Conid{ExpAr}\;\Varid{a}))){}\<[E]%
 \\
-\>[B]{}\Varid{clean}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{clean}\;(\Conid{Bin}\;\Conid{Sum}\;(\Conid{N}\;\mathrm{0})\;\Varid{b})\mathrel{=}\Varid{outExpAr}\;\Varid{b}{}\<[E]%
 \\
+\>[B]{}\Varid{clean}\;(\Conid{Bin}\;\Conid{Sum}\;\Varid{a}\;(\Conid{N}\;\mathrm{0}))\mathrel{=}\Varid{outExpAr}\;\Varid{a}{}\<[E]%
+\\
+\>[B]{}\Varid{clean}\;(\Conid{Bin}\;\Conid{Product}\;(\Conid{N}\;\mathrm{0})\;\anonymous )\mathrel{=}i_2\;(i_1\;\mathrm{0}){}\<[E]%
+\\
+\>[B]{}\Varid{clean}\;(\Conid{Bin}\;\Conid{Product}\;\anonymous \;(\Conid{N}\;\mathrm{0}))\mathrel{=}i_2\;(i_1\;\mathrm{0}){}\<[E]%
+\\
+\>[B]{}\Varid{clean}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{a}\;(\Conid{N}\;\mathrm{1}))\mathrel{=}\Varid{outExpAr}\;\Varid{a}{}\<[E]%
+\\
+\>[B]{}\Varid{clean}\;(\Conid{Bin}\;\Conid{Product}\;(\Conid{N}\;\mathrm{1})\;\Varid{b})\mathrel{=}\Varid{outExpAr}\;\Varid{b}{}\<[E]%
+\\
+\>[B]{}\Varid{clean}\;(\Conid{Un}\;\Conid{Negate}\;(\Conid{N}\;\mathrm{0}))\mathrel{=}i_2\;(i_1\;\mathrm{0}){}\<[E]%
+\\
+\>[B]{}\Varid{clean}\;(\Conid{Un}\;\Conid{Negate}\;(\Conid{Un}\;\Conid{Negate}\;\Varid{x}))\mathrel{=}\Varid{outExpAr}\;\Varid{x}{}\<[E]%
+\\
+\>[B]{}\Varid{clean}\;(\Conid{Un}\;\Conid{E}\;(\Conid{N}\;\mathrm{0}))\mathrel{=}i_2\;(i_1\;\mathrm{1}){}\<[E]%
+\\
+\>[B]{}\Varid{clean}\;\Varid{exp}\mathrel{=}\Varid{outExpAr}\;\Varid{exp}{}\<[E]%
+\\[\blanklineskip]%
 \>[B]{}\mbox{\onelinecomment }{}\<[E]%
 \\
-\>[B]{}\Varid{gopt}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{gopt}\;\Varid{var}\mathrel{=}\Varid{g\char95 eval\char95 exp}\;\Varid{var}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{sd\char95 gen}\mathbin{::}\Conid{Floating}\;\Varid{a}\Rightarrow {}\<[E]%
 \\
@@ -1626,14 +1649,53 @@ Definir:
 \>[B]{}\hsindent{11}{}\<[11]%
 \>[11]{}\to (\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}){}\<[E]%
 \\
-\>[B]{}\Varid{sd\char95 gen}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{sd\char95 gen}\mathrel{=}\alt{\Varid{sd\char95 x}}{\alt{\Varid{sd\char95 n}}{\alt{\Varid{sd\char95 binop}}{\Varid{sd\char95 unop}}}}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{12}{}\<[12]%
+\>[12]{}\Varid{sd\char95 x}\;\anonymous \mathrel{=}(\Conid{X},\Conid{N}\;\mathrm{1}){}\<[E]%
+\\
+\>[B]{}\hsindent{12}{}\<[12]%
+\>[12]{}\Varid{sd\char95 n}\;\Varid{x}\mathrel{=}(\Conid{N}\;\Varid{x},\Conid{N}\;\mathrm{0}){}\<[E]%
+\\
+\>[B]{}\hsindent{12}{}\<[12]%
+\>[12]{}\Varid{sd\char95 binop}\;(\Varid{op},((\Varid{x1},\Varid{y1}),(\Varid{x2},\Varid{y2})))\mid \Varid{op}\equiv \Conid{Sum}\mathrel{=}((\Conid{Bin}\;\Conid{Sum}\;\Varid{x1}\;\Varid{x2}),(\Conid{Bin}\;\Conid{Sum}\;\Varid{y1}\;\Varid{y2})){}\<[E]%
+\\
+\>[12]{}\hsindent{34}{}\<[46]%
+\>[46]{}\mid \Varid{otherwise}\mathrel{=}((\Conid{Bin}\;\Conid{Product}\;\Varid{x1}\;\Varid{x2}),(\Conid{Bin}\;\Conid{Sum}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{x1}\;\Varid{y2})\;(\Conid{Bin}\;\Conid{Product}\;\Varid{y1}\;\Varid{x2}))){}\<[E]%
+\\
+\>[B]{}\hsindent{12}{}\<[12]%
+\>[12]{}\Varid{sd\char95 unop}\;(\Varid{op},(\Varid{x},\Varid{y}))\mid \Varid{op}\equiv \Conid{Negate}\mathrel{=}((\Conid{Un}\;\Varid{op}\;\Varid{x}),(\Conid{Un}\;\Varid{op}\;\Varid{y})){}\<[E]%
+\\
+\>[12]{}\hsindent{21}{}\<[33]%
+\>[33]{}\mid \Varid{otherwise}\mathrel{=}(\Conid{Un}\;\Varid{op}\;\Varid{x},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Varid{op}\;\Varid{x})\;\Varid{y}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{ad\char95 gen}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{ad\char95 gen}\;\Varid{a}\mathrel{=}\alt{\Varid{ad\char95 x}}{\alt{\Varid{ad\char95 n}}{\alt{\Varid{ad\char95 binop}}{\Varid{ad\char95 unop}}}}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{12}{}\<[12]%
+\>[12]{}\Varid{ad\char95 x}\;\anonymous \mathrel{=}(\Varid{a},\mathrm{1}){}\<[E]%
+\\
+\>[B]{}\hsindent{12}{}\<[12]%
+\>[12]{}\Varid{ad\char95 n}\;\Varid{x}\mathrel{=}(\Varid{x},\mathrm{0}){}\<[E]%
+\\
+\>[B]{}\hsindent{12}{}\<[12]%
+\>[12]{}\Varid{ad\char95 binop}\;(\Varid{op},((\Varid{x1},\Varid{y1}),(\Varid{x2},\Varid{y2})))\mid \Varid{op}\equiv \Conid{Sum}\mathrel{=}(\Varid{x1}\mathbin{+}\Varid{x2},\Varid{y1}\mathbin{+}\Varid{y2}){}\<[E]%
+\\
+\>[12]{}\hsindent{34}{}\<[46]%
+\>[46]{}\mid \Varid{otherwise}\mathrel{=}(\Varid{x1}\mathbin{*}\Varid{x2},(\Varid{x1}\mathbin{*}\Varid{y2})\mathbin{+}(\Varid{y1}\mathbin{*}\Varid{x2})){}\<[E]%
+\\
+\>[B]{}\hsindent{12}{}\<[12]%
+\>[12]{}\Varid{ad\char95 unop}\;(\Varid{op},(\Varid{x},\Varid{y}))\mid \Varid{op}\equiv \Conid{Negate}\mathrel{=}((\mathbin{-}\mathrm{1})\mathbin{*}\Varid{x},(\mathbin{-}\mathrm{1})\mathbin{*}\Varid{y}){}\<[E]%
+\\
+\>[12]{}\hsindent{21}{}\<[33]%
+\>[33]{}\mid \Varid{otherwise}\mathrel{=}(\Varid{\Conid{Prelude}.exp}\;(\Varid{x}),\Varid{y}\mathbin{*}\Varid{\Conid{Prelude}.exp}\;(\Varid{x})){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
@@ -1642,11 +1704,11 @@ Definir
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{loop}\;(\Varid{f},\Varid{h},\Varid{b},\Varid{c})\mathrel{=}(\Varid{c}\mathbin{*}\Varid{h},\Varid{b}\mathbin{/}\Varid{c},\mathrm{4}\mathbin{+}\Varid{b},\mathrm{1}\mathbin{+}\Varid{c}){}\<[E]%
+\>[B]{}\Varid{loop}\;(\Varid{f},\Varid{b},\Varid{c})\mathrel{=}((\Varid{f}\mathbin{*}\Varid{b})\mathbin{\Varid{`div`}}\Varid{c},\mathrm{4}\mathbin{+}\Varid{b},\mathrm{1}\mathbin{+}\Varid{c}){}\<[E]%
 \\
-\>[B]{}\Varid{inic}\mathrel{=}(\mathrm{1},\mathrm{1},\mathrm{6},\mathrm{3}){}\<[E]%
+\>[B]{}\Varid{inic}\mathrel{=}(\mathrm{1},\mathrm{2},\mathrm{2}){}\<[E]%
 \\
-\>[B]{}\Varid{prj}\;(\Varid{a},\Varid{b},\Varid{c},\Varid{d})\mathrel{=}\Varid{a}{}\<[E]%
+\>[B]{}\Varid{prj}\;(\Varid{a},\Varid{b},\Varid{c})\mathrel{=}\Varid{a}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 por forma a que
@@ -1806,19 +1868,16 @@ Antes de descobrir o avg\textunderscore aux, será necessário transformar [b,q]
 Assim, vamos então determinar avg\textunderscore aux:
 \begin{eqnarray*}
 \start
-	\ensuremath{\Varid{avg\char95 aux}\mathrel{=}\cata{\conj{\Varid{b}}{\Varid{q}}}}
+	\ensuremath{\Varid{avg\char95 aux}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}}
 %
 \just\equiv{ Definição de avg\textunderscore aux}
 %
-     \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\conj{\Varid{b}}{\Varid{q}}}}
+     \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}}
 %
 \just\equiv{ Resultado calculado em cima }
 %
      \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\conj{\alt{\p1\comp \Varid{b}}{\p1\comp \Varid{q}}}{\alt{\p2\comp \Varid{b}}{\p2\comp \Varid{q}}}}}
 %
-\just\equiv{ Lei 20 - Fusão + }
-%
-     \ensuremath{\alt{\conj{\p1}{\p2}\comp \Varid{b}}{\conj{\p1}{\p2}\comp \Varid{q}}}
 %
 \just\equiv{ Lei 52 - Fokkinga e Functor das listas: F f = id + id x f}
 %
@@ -1826,11 +1885,11 @@ Assim, vamos então determinar avg\textunderscore aux:
 %
 \just\equiv{ Definição de in para as listas ([nil,cons]) e Lei 22 - Absorção +}
 %
-     \ensuremath{\begin{lcbr}\alt{\Varid{avg}\comp \Varid{nil}}{\Varid{avg}\comp \Varid{cons}}\mathrel{=}\alt{\p1\comp \Varid{b}\comp \Varid{id}}{\p1\comp \Varid{q}\comp \Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}}}\\\alt{\length \comp \Varid{nil}}{\length \comp \Varid{cons}}\mathrel{=}\alt{\p2\comp \Varid{b}\comp \Varid{id}}{\p2\comp \Varid{q}\comp \Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}}}\end{lcbr}}
+     \ensuremath{\begin{lcbr}\alt{\Varid{avg}\comp \Varid{nil}}{\Varid{avg}\comp \Varid{cons}}\mathrel{=}\alt{\p1\comp \Varid{b}\comp \Varid{id}}{\p1\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}})}\\\alt{\length \comp \Varid{nil}}{\length \comp \Varid{cons}}\mathrel{=}\alt{\p2\comp \Varid{b}\comp \Varid{id}}{\p2\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}})}\end{lcbr}}
 %
 \just\equiv{ Lei 27 - Eq +, 2 vezes; Lei 1, Natural-id}
 %
-     \ensuremath{\begin{lcbr}\Varid{avg}\comp \Varid{nil}\mathrel{=}\p1\comp \Varid{b}\\\Varid{avg}\comp \Varid{cons}\mathrel{=}\p1\comp \Varid{q}\times\conj{\Varid{avg}}{\length }\end{lcbr}\mid \begin{lcbr}\length \comp \Varid{nil}\mathrel{=}\p2\comp \Varid{b}\\\length \comp \Varid{cons}\mathrel{=}\p2\comp \Varid{q}\times\conj{\Varid{avg}}{\length }\end{lcbr}}
+     \ensuremath{\begin{lcbr}\Varid{avg}\comp \Varid{nil}\mathrel{=}\p1\comp \Varid{b}\\\Varid{avg}\comp \Varid{cons}\mathrel{=}\p1\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}})\end{lcbr}\mid \begin{lcbr}\length \comp \Varid{nil}\mathrel{=}\p2\comp \Varid{b}\\\length \comp \Varid{cons}\mathrel{=}\p2\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}})\end{lcbr}}
 \qed
 \end{eqnarray*}
 \begin{hscode}\SaveRestoreHook
@@ -1842,8 +1901,12 @@ Assim, vamos então determinar avg\textunderscore aux:
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{avg\char95 aux}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{avg\char95 aux}\mathrel{=}\Varid{cataList}\;\alt{\underline{(\mathrm{0},\mathrm{0})}}{\Varid{aux}}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{aux}\;(\Varid{elem},(\Varid{media},\Varid{comprimento}))\mathrel{=}((\Varid{elem}\mathbin{+}\Varid{media}\mathbin{*}\Varid{comprimento})\mathbin{/}(\Varid{comprimento}\mathbin{+}\mathrm{1}),\Varid{comprimento}\mathbin{+}\mathrm{1}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 Solução para árvores de tipo \LTree:
@@ -1854,7 +1917,10 @@ Solução para árvores de tipo \LTree:
 \>[B]{}\Varid{avgLTree}\mathrel{=}\p1\comp \llparenthesis\, \Varid{gene}\,\rrparenthesis\;\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{gene}\mathrel{=}\bot {}\<[E]%
+\>[4]{}\Varid{gene}\mathrel{=}\alt{\lambda \Varid{l}\to (\Varid{l},\mathrm{1})}{\Varid{aux}}{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{aux}\;((\Varid{md1},\Varid{comp1}),(\Varid{md2},\Varid{comp2}))\mathrel{=}((\Varid{md1}\mathbin{*}\Varid{comp1}\mathbin{+}\Varid{comp2}\mathbin{*}\Varid{md2})\mathbin{/}(\Varid{comp1}\mathbin{+}\Varid{comp2}),\Varid{comp1}\mathbin{+}\Varid{comp2}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
