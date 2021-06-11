@@ -1036,20 +1036,46 @@ g_eval_exp var = either g_eval_x (either g_eval_na (either g_eval_binop g_eval_u
                   g_eval_unop (op,a1) | op == Negate = (-1)*a1
                                       | otherwise = Prelude.exp(a1)
 ---
-clean = undefined
+clean = either clean_x (either clean_nx (either clean_binop clean_unop)) 
+                where
+                clean_x X = outExpAr X
+                clean_nx (N x) = outExpAr (N x)
+                clean_binop (Bin Sum (N 0) b) = outExpAr b 
+                clean_binop (Bin Sum a (N 0)) = outExpAr a 
+                clean_binop (Bin Product (N 0) _) = outExpAr (N 0)
+                clean_binop (Bin Product _ (N 0)) = outExpAr (N 0)
+                clean_binop (Bin Product a (N 1)) = outExpAr a
+                clean_binop (Bin Product (N 1) b) = outExpAr b
+                clean_binop (Bin op a b) = outExpAr (Bin op a b)
+                clean_unop (Un Negate (N 0)) = outExpAr (N 0) 
+                clean_unop (Un Negate (Un Negate x)) = outExpAr x 
+                clean_unop (Un E (N 0)) = outExpAr (N 1)
+                clean_unop (Un op a) = outExpAr (Un op a)
 ---
-gopt = undefined 
+gopt = g_val_exp 
 \end{code}
 
 \begin{code}
 sd_gen :: Floating a => 
           Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) 
           -> (ExpAr a, ExpAr a)
-sd_gen = undefined
+sd_gen = either sd_x (either sd_n (either sd_binop sd_unop)) where
+           sd_x _ = (X, N 1)
+           sd_n x = (N x, N 0)
+           sd_binop (op, ((x1,y1), (x2,y2))) |op == Sum = ((Bin Sum x1 x2), (Bin Sum y1 y2))
+                                             |otherwise = ((Bin Product x1 x2), (Bin Sum (Bin Product x1 y2)(Bin Product y1 x2)))
+           sd_unop (op, (x, y)) | op == Negate = ((Un op x), (Un op y))
+                                | otherwise = (Un op x, Bin Product (Un op x) y)
 \end{code}
 
 \begin{code}
-ad_gen = undefined
+ad_gen a = either ad_x (either ad_n (either ad_binop ad_unop)) where
+           ad_x _ = (a,1)
+           ad_n x = (x,0)
+           ad_binop (op, ((x1,y1), (x2,y2))) |op == Sum = (x1 + x2, y1 + y2)
+                                             |otherwise = (x1 * x2, (x1 * y2) + (y1 * x2))
+           ad_unop (op, (x, y)) | op == Negate = ((-1)*x, (-1)*y)
+                                | otherwise = (Prelude.exp(x), y * Prelude.exp(x))
 \end{code}
 
 \subsection*{Problema 2}
