@@ -1556,11 +1556,15 @@ São dadas:
 \>[B]{}\Varid{ad}\;\Varid{v}\mathrel{=}\p2\comp \Varid{cataExpAr}\;(\Varid{ad\char95 gen}\;\Varid{v}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-Definir:
+
+O primeiro problema baseia-se em definir a função "saída" do tipo ExpAr.
+É nos dado tanto o tipo da função \ensuremath{\Varid{outExpAr}} como o do seu isomorfismo \ensuremath{\Varid{inExpAr}}, assim pudendo representar o seu diagrama.
 
 \xymatrix{
-ExpAr \ar@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,ExpAr))) \ar@/^2pc/[ll]^-{in} 
+ExpAr\ A \ar@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr A,ExpAr\ A))+ (UnOp,ExpAr\ A))) \ar@/^2pc/[ll]^-{in} 
 }
+
+Assim, conseguimos perceber de imediato a definição de \ensuremath{\Varid{outExpAr}}.
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1577,7 +1581,8 @@ ExpAr \ar@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,E
 \ColumnHook
 \end{hscode}\resethooks
 
-A função recExpAr recebe uma função f e chama a função baseExpAr, aplicando esse f apenas aos argumentos ExpAr, deixando o resto intacto com a função id. Fazendo assim a função recursiva do tipo ExpAr.
+Relativamente à função \ensuremath{\Varid{recExpAr}}.
+Esta recebe uma função f e chama a função baseExpAr, aplicando esse f apenas aos argumentos ExpAr, deixando o resto intacto com a função id. Fazendo assim a função recursiva do tipo ExpAr.
 \par Chegamos à conclusão da expressão de \texttt{recExpAr} através da dica dada pelo professor nas FAQ's da página da disciplina (Q9).
 
 \begin{hscode}\SaveRestoreHook
@@ -1587,15 +1592,21 @@ A função recExpAr recebe uma função f e chama a função baseExpAr, aplicand
 \ColumnHook
 \end{hscode}\resethooks
 
+No enunciado é nos dado \ensuremath{\Varid{cataExpAr}} e, com isso, fazer um gene de um catamorfismo que recursivamente calculasse o valor de um ExpAr.
+Começamos por fazer o diagrama, para nos servir de ajuda à realização do gene.
 
 \xymatrix@R=2.5cm{
 (A,ExpAr A)\ar@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
 & \hspace*{3cm}{\cong} 
 & {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr A),(A,ExpAr A)) + (UnOp,(A,ExpAr A)))))} \ar@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
-A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
+A & & { (A,1) + ((A,A) + ((BinOp,(A,A)) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
 }
 
+
 \textit{recExpAr eval\textunderscore exp} = id + id + id + eval\textunderscore exp + eval\textunderscore exp + id + eval\textunderscore exp
+
+Com a ajuda do diagrama chegamos ao seguinte gene.
+
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{17}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1634,15 +1645,21 @@ A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
 \>[B]{}\mbox{\onelinecomment }{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
+
+A seguinte questão baseava-se em criar uma solução mais eficiente à questão anterior, e para isso era necessário fazer um hilomorfismo, ou seja, juntar ao catamorfismo já feito, um anamorfismo que realiza-se uma otimização na expressão, utilizando, por exemplo, das propriedades neutras da multiplicação.
+Sabendo disso, criamos mais uma vez um diagrama para nos ajudar a chegar à solução do problema.
+
 \hspace*{-2cm}{
 \xymatrix@R=2cm{
-ExpAr A\ar[d] \ar[rr] &  & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,ExpAr)))\ar[d]\\
+(A,ExpAr A)\ar[d]^-{id + clean} \ar[rr] &  & \scriptstyle((A,1) + ((A,A) + ((BinOp,((A,ExpAr),(A,ExpAr)) + (UnOp,(A,ExpAr))))))\ar[d]^-{recExpAr (id + clean)}\\
 (A,ExpAr A)\ar@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
 & \hspace*{3cm}{\cong} 
 & {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr),(A,ExpAr)) + (UnOp,(A,ExpAr)))))} \ar@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
-A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{gopt}
+A & & { (A,1) + ((A,A) + ((BinOp,(A,A)) + (UnOp,A)))}\ar[ll]^-{gopt}
 }
 }
+
+Seguindo o diagrama, chegamos à solução do clean. Como dissemos a solução do gene \ensuremath{\Varid{gopt}} (gene utilizado no catamorfismo do hilomorfismo), foi re-utilizara o gene do catamorfismo da questão anterior, \ensuremath{\Varid{g\char95 eval\char95 exp}}.
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1669,11 +1686,11 @@ A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{gopt}
 \\
 \>[B]{}\Varid{clean}\;\Varid{exp}\mathrel{=}\Varid{outExpAr}\;\Varid{exp}{}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\mbox{\onelinecomment }{}\<[E]%
-\\
 \>[B]{}\Varid{gopt}\;\Varid{var}\mathrel{=}\Varid{g\char95 eval\char95 exp}\;\Varid{var}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
+
+Nesta questão era pedido que realizasse-mos uma função que fizesse a derivada de uma expressão, através de um catamorfismo. Percebemos através do enunciado que o gene devolvia um par, e que, a função principal só se aproveitava do segundo elemento. Com isso percebemos que o gene colocava a expressão intacta no primeiro elemento do par, e a sua derivada no segundo, para que quando aparece-se uma multiplicação conseguisse completar a derivada, já que esta precisa de parte da expressão antes de ser derivada. Depois de toda a análise, chegamos ao seguinte diagrama.
 
 \hspace*{-2cm}{
 \xymatrix@R=2cm{
@@ -1681,6 +1698,8 @@ ExpAr A\ar@/^1pc/[rr]^-{out} \ar[d]_-{sd} & \hspace*{3cm}{\cong} & {\scriptstyle
 (ExpAr A,ExpAr A) & & {\scriptscriptstyle 1 + (A + ((Binop,((ExpAr A , ExpAr A),(ExpAr A , ExpAr A))) + (Un Op , (ExpAr A , ExpAr A))))}\ar[ll]^-{sd\_gen}
 }
 }
+
+Através do diagrama, conseguimos concluir o seguinte gene.
 
 
 \begin{hscode}\SaveRestoreHook
@@ -1725,10 +1744,14 @@ ExpAr A\ar@/^1pc/[rr]^-{out} \ar[d]_-{sd} & \hspace*{3cm}{\cong} & {\scriptstyle
 \ColumnHook
 \end{hscode}\resethooks
 
+Esta questão é muito parecida à anterior, só que calculando a derivada com um valor para o x dado. Sendo assim, utilizamos do mesmo raciocinio e fizemos o seguinte diagrama.
+
 \xymatrix@R=3cm@C=1cm{
 ExpAr A\ar@/^1pc/[rr]^-{out} \ar[d]_-{ad} & \hspace*{3cm}{\cong} & { 1 + (A + ((Binop,(ExpAr A , ExpAr A)) + (UnOp , ExpAr A)))} \ar@/^1pc/[ll]^-{in} \ar[d]^-{recExpAr\ ad}\\
 (A, A) & & {(1 + (A + ((Binop,((A , A),(A , A))) + (Un Op , (A , A)))))}\ar[ll]^-{ad\_gen}
 }
+
+Com o diagrama chegamos ao seguinte gene.
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1801,39 +1824,58 @@ C_{n+1} = \frac{2(2n+1)}{n+2} C_n\\
 
 que pode ser deduzida \href{https://math.stackexchange.com/questions/337842/simplifying-catalan-number-recurrence-relation}{aqui}.
 
-Assim sendo, vamos começar a desmontar estas duas equações:
-
+\par
+\noindent
+\newline
+    A expressão para calcular o n-ésimo número de Catalan pode ser traduzida pelas seguintes expressões:
+    
+\noindent
+\newline
+$
 $$ \left\{
 \begin{array}{lr}
 C(0) = 1\\
 C(n+1) = (h(n) / r(n)) * C(n)
 \end{array}
 \right. $$
-
+$
+\par
+\noindent
+\newline
+    Chegamos ao resultado da função recursiva h através dos seguintes cálculos.
+    
+\noindent
+\newline
+$
 $$ \left\{
 \begin{array}{lr}
 h(0) = 2\\
 h(n) = 2(2n+1)\\
 h(n+1) = 2(2(n+1)+1)
 \end{array}
-\right. $$
 \equiv
+\right. $$
 $$ \left\{
 \begin{array}{lr}
 h(0) = 2\\
 h(n) = 4n+2\\
 h(n+1) = 2(2n+2+1)
 \end{array}
-\right. $$
 \equiv
+\right. $$
 $$ \left\{
 \begin{array}{lr}
 h(0) = 2\\
 h(n) = 4n+2\\
 h(n+1) = 4n+2+4
 \end{array}
-\right. $$
 \equiv
+\right. $$
+$
+
+
+\noindent
+$
 $$ \left\{
 \begin{array}{lr}
 h(0) = 2\\
@@ -1841,24 +1883,31 @@ h(n) = 4n+2\\
 h(n+1) = h(n)+4
 \end{array}
 \right. $$
-
+$
+\par
+\noindent
 \newline
+    Chegamos ao resultado da função recursiva r através dos seguintes cálculos.
+    
+\noindent
+\newline
+$
 $$ \left\{
 \begin{array}{lr}
 r(0) = 2\\
 r(n) = (n+2)\\
 r(n+1) = (n+1)+2
 \end{array}
-\right. $$
 \equiv
+\right. $$
 $$ \left\{
 \begin{array}{lr}
 r(0) = 2\\
 r(n) = (n+2)\\ 
 r(n+1) = n+2+1
 \end{array}
-\right. $$
 \equiv
+\right. $$
 $$ \left\{
 \begin{array}{lr}
 r(0) = 2\\
@@ -1866,7 +1915,10 @@ r(n) = (n+2)\\
 r(n+1) = r(n)+1
 \end{array}
 \right. $$
-
+$
+\par
+\noindent
+\newline
 Agora estamos em condições de responder ao enunciado. \par
 A função \textit{init} irá ser constituída por um triplo, onde cada campo vai ser constiuído pelo valor obtido no caso de paragem da função c, h e r, respetivamente.\par
 A função \textit{loop} irá ser constiuída por um triplo, onde em cada campo irá estar a função c, h e r, respetivamente.\par
@@ -1920,6 +1972,7 @@ Antes de descobrir o avg\textunderscore aux tanto para listas como para \texttt{
 
 \begin{eqnarray*}
 \start
+%
 	\ensuremath{\alt{\Varid{b}}{\Varid{q}}}
 %
 \just\equiv{ Lei 1 - Natural-id }
@@ -1947,6 +2000,8 @@ Antes de descobrir o avg\textunderscore aux tanto para listas como para \texttt{
 Solução para listas não vazias:
 
 \begin{eqnarray*}
+\start
+%
 	\ensuremath{\Varid{avg\char95 aux}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}}
 %
 \just\equiv{ Definição de avg\textunderscore aux}
@@ -1956,7 +2011,6 @@ Solução para listas não vazias:
 \just\equiv{ Resultado calculado em cima }
 %
      \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\conj{\alt{\p1\comp \Varid{b}}{\p1\comp \Varid{q}}}{\alt{\p2\comp \Varid{b}}{\p2\comp \Varid{q}}}}}
-%
 %
 \just\equiv{ Lei 52 - Fokkinga e Functor das listas: F f = id + id x f}
 %
@@ -2019,6 +2073,7 @@ Solução para listas não vazias:
       \ensuremath{\p2\;(\Varid{b}\;\Varid{l})\mathrel{=}\mathrm{0}}\\
       \ensuremath{\length \;(\Varid{h}\mathbin{:}\Varid{t})\mathrel{=}(\p2\;(\Varid{q}\;(\Varid{h},(\Varid{avg}\;\Varid{t},\length \;\Varid{t})))}
   \end{array}
+\right 
 \qed
 \end{eqnarray*}
 \begin{hscode}\SaveRestoreHook
@@ -2040,7 +2095,8 @@ Solução para listas não vazias:
 \end{hscode}\resethooks
 Solução para árvores de tipo \LTree:
 \begin{eqnarray*}
-
+\start
+%
 \ensuremath{\Varid{avg\char95 aux}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}}
 %
 \just\equiv{ Definição de avg\textunderscore aux}

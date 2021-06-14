@@ -1022,7 +1022,7 @@ O primeiro problema baseia-se em definir a função "saída" do tipo ExpAr.
 É nos dado tanto o tipo da função |outExpAr| como o do seu isomorfismo |inExpAr|, assim pudendo representar o seu diagrama.
 
 \xymatrix{
-ExpAr \ar@@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,ExpAr))) \ar@@/^2pc/[ll]^-{in} 
+ExpAr\ A \ar@@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr A,ExpAr\ A))+ (UnOp,ExpAr\ A))) \ar@@/^2pc/[ll]^-{in} 
 }
 
 Assim, conseguimos perceber de imediato a definição de |outExpAr|.
@@ -1050,12 +1050,14 @@ Começamos por fazer o diagrama, para nos servir de ajuda à realização do gen
 (A,ExpAr A)\ar@@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
 & \hspace*{3cm}{\cong} 
 & {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr A),(A,ExpAr A)) + (UnOp,(A,ExpAr A)))))} \ar@@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
-A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
+A & & { (A,1) + ((A,A) + ((BinOp,(A,A)) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
 }
+
+
+\textit{recExpAr eval\textunderscore exp} = id + id + id + eval\textunderscore exp + eval\textunderscore exp + id + eval\textunderscore exp
 
 Com a ajuda do diagrama chegamos ao seguinte gene.
 
-\textit{recExpAr eval\textunderscore exp} = id + id + id + eval\textunderscore exp + eval\textunderscore exp + id + eval\textunderscore exp
 \begin{code}
 g_eval_exp var = either g_eval_x (either g_eval_na (either g_eval_binop g_eval_unop)) 
                 where
@@ -1075,11 +1077,11 @@ Sabendo disso, criamos mais uma vez um diagrama para nos ajudar a chegar à solu
 
 \hspace*{-2cm}{
 \xymatrix@@R=2cm{
-(A,ExpAr A)\ar[d] \ar[rr] &  & (A,1) + ((A,A) + ((BinOp,((A,ExpAr),(A,ExpAr)) + (UnOp,(A,ExpAr)))))\ar[d]\\
+(A,ExpAr A)\ar[d]^-{id + clean} \ar[rr] &  & \scriptstyle((A,1) + ((A,A) + ((BinOp,((A,ExpAr),(A,ExpAr)) + (UnOp,(A,ExpAr))))))\ar[d]^-{recExpAr (id + clean)}\\
 (A,ExpAr A)\ar@@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
 & \hspace*{3cm}{\cong} 
 & {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr),(A,ExpAr)) + (UnOp,(A,ExpAr)))))} \ar@@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
-A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{gopt}
+A & & { (A,1) + ((A,A) + ((BinOp,(A,A)) + (UnOp,A)))}\ar[ll]^-{gopt}
 }
 }
 
@@ -1179,39 +1181,58 @@ C_{n+1} = \frac{2(2n+1)}{n+2} C_n\\
 
 que pode ser deduzida \href{https://math.stackexchange.com/questions/337842/simplifying-catalan-number-recurrence-relation}{aqui}.
 
-Assim sendo, vamos começar a desmontar estas duas equações:
-
+\par
+\noindent
+\newline
+    A expressão para calcular o n-ésimo número de Catalan pode ser traduzida pelas seguintes expressões:
+    
+\noindent
+\newline
+$
 $$ \left\{
 \begin{array}{lr}
 C(0) = 1\\
 C(n+1) = (h(n) / r(n)) * C(n)
 \end{array}
 \right. $$
-
+$
+\par
+\noindent
+\newline
+    Chegamos ao resultado da função recursiva h através dos seguintes cálculos.
+    
+\noindent
+\newline
+$
 $$ \left\{
 \begin{array}{lr}
 h(0) = 2\\
 h(n) = 2(2n+1)\\
 h(n+1) = 2(2(n+1)+1)
 \end{array}
-\right. $$
 \equiv
+\right. $$
 $$ \left\{
 \begin{array}{lr}
 h(0) = 2\\
 h(n) = 4n+2\\
 h(n+1) = 2(2n+2+1)
 \end{array}
-\right. $$
 \equiv
+\right. $$
 $$ \left\{
 \begin{array}{lr}
 h(0) = 2\\
 h(n) = 4n+2\\
 h(n+1) = 4n+2+4
 \end{array}
-\right. $$
 \equiv
+\right. $$
+$
+
+
+\noindent
+$
 $$ \left\{
 \begin{array}{lr}
 h(0) = 2\\
@@ -1219,24 +1240,31 @@ h(n) = 4n+2\\
 h(n+1) = h(n)+4
 \end{array}
 \right. $$
-
+$
+\par
+\noindent
 \newline
+    Chegamos ao resultado da função recursiva r através dos seguintes cálculos.
+    
+\noindent
+\newline
+$
 $$ \left\{
 \begin{array}{lr}
 r(0) = 2\\
 r(n) = (n+2)\\
 r(n+1) = (n+1)+2
 \end{array}
-\right. $$
 \equiv
+\right. $$
 $$ \left\{
 \begin{array}{lr}
 r(0) = 2\\
 r(n) = (n+2)\\ 
 r(n+1) = n+2+1
 \end{array}
-\right. $$
 \equiv
+\right. $$
 $$ \left\{
 \begin{array}{lr}
 r(0) = 2\\
@@ -1244,7 +1272,10 @@ r(n) = (n+2)\\
 r(n+1) = r(n)+1
 \end{array}
 \right. $$
-
+$
+\par
+\noindent
+\newline
 Agora estamos em condições de responder ao enunciado. \par
 A função \textit{init} irá ser constituída por um triplo, onde cada campo vai ser constiuído pelo valor obtido no caso de paragem da função c, h e r, respetivamente.\par
 A função \textit{loop} irá ser constiuída por um triplo, onde em cada campo irá estar a função c, h e r, respetivamente.\par
@@ -1278,6 +1309,7 @@ Antes de descobrir o avg\textunderscore aux tanto para listas como para \texttt{
 
 \begin{eqnarray*}
 \start
+%
 	|either b q|
 %
 \just\equiv{ Lei 1 - Natural-id }
@@ -1305,6 +1337,8 @@ Antes de descobrir o avg\textunderscore aux tanto para listas como para \texttt{
 Solução para listas não vazias:
 
 \begin{eqnarray*}
+\start
+%
 	|avg_aux = cata (either b q)|
 %
 \just\equiv{ Definição de avg\textunderscore aux}
@@ -1314,7 +1348,6 @@ Solução para listas não vazias:
 \just\equiv{ Resultado calculado em cima }
 %
      |split avg length = cata (split (either (p1 . b) (p1 . q)) (either (p2 . b) (p2 . q)))|
-%
 %
 \just\equiv{ Lei 52 - Fokkinga e Functor das listas: F f = id + id x f}
 %
@@ -1385,11 +1418,17 @@ Solução para listas não vazias:
       |p2 (b l) = 0 |\\
       |length (h:t) = (p2 (q (h,(avg t, length t))) |
   \end{array}
+\right 
 \qed
 \end{eqnarray*}
 \begin{code}
 avg = p1.avg_aux
 \end{code}
+
+Como dito no enunciado, o gene será um either (b q). 
+Através da nossa demonstração, percebemos que o lado esquerdo do either (ou seja, b) será um either, em que as suas alternativas serão funções constantes de 0 (p1 (b l) = 0
+ e p2 (b l) = 0). Já o seu lado direito, como podemos ver na demonstração, será apenas uma função que realiza tanto a média como o comprimento de uma lista através 
+ do comprimento e da média do resto da lista, guardando no primeiro elemento de um par a média e no segundo o comprimento.
 
 \begin{code}
 avg_aux = cataList (either (const (0,0)) aux) where
@@ -1398,7 +1437,8 @@ avg_aux = cataList (either (const (0,0)) aux) where
 \end{code}
 Solução para árvores de tipo \LTree:
 \begin{eqnarray*}
-
+\start
+%
 |avg_aux = cata (either b q)|
 %
 \just\equiv{ Definição de avg\textunderscore aux}
