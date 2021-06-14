@@ -1017,11 +1017,15 @@ sd = p2 . cataExpAr sd_gen
 ad :: Floating a => a -> ExpAr a -> a
 ad v = p2 . cataExpAr (ad_gen v)
 \end{code}
-Definir:
+
+O primeiro problema baseia-se em definir a função "saída" do tipo ExpAr.
+É nos dado tanto o tipo da função |outExpAr| como o do seu isomorfismo |inExpAr|, assim pudendo representar o seu diagrama.
 
 \xymatrix{
 ExpAr \ar@@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,ExpAr))) \ar@@/^2pc/[ll]^-{in} 
 }
+
+Assim, conseguimos perceber de imediato a definição de |outExpAr|.
 
 \begin{code}
 outExpAr :: ExpAr a-> Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a)))
@@ -1031,13 +1035,16 @@ outExpAr (Bin op exp1 exp2) = i2 (i2 (i1 (op ,(exp1, exp2))))
 outExpAr (Un op exp1) = i2 (i2 (i2 (op, exp1)))
 \end{code}
 
-A função recExpAr recebe uma função f e chama a função baseExpAr, aplicando esse f apenas aos argumentos ExpAr, deixando o resto intacto com a função id. Fazendo assim a função recursiva do tipo ExpAr.
+Relativamente à função |recExpAr|.
+Esta recebe uma função f e chama a função baseExpAr, aplicando esse f apenas aos argumentos ExpAr, deixando o resto intacto com a função id. Fazendo assim a função recursiva do tipo ExpAr.
 \par Chegamos à conclusão da expressão de \texttt{recExpAr} através da dica dada pelo professor nas FAQ's da página da disciplina (Q9).
 
 \begin{code}
 recExpAr f = baseExpAr id id id f f id f
 \end{code}
 
+No enunciado é nos dado |cataExpAr| e, com isso, fazer um gene de um catamorfismo que recursivamente calculasse o valor de um ExpAr.
+Começamos por fazer o diagrama, para nos servir de ajuda à realização do gene.
 
 \xymatrix@@R=2.5cm{
 (A,ExpAr A)\ar@@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
@@ -1045,6 +1052,8 @@ recExpAr f = baseExpAr id id id f f id f
 & {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr A),(A,ExpAr A)) + (UnOp,(A,ExpAr A)))))} \ar@@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
 A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
 }
+
+Com a ajuda do diagrama chegamos ao seguinte gene.
 
 \textit{recExpAr eval\textunderscore exp} = id + id + id + eval\textunderscore exp + eval\textunderscore exp + id + eval\textunderscore exp
 \begin{code}
@@ -1060,15 +1069,21 @@ g_eval_exp var = either g_eval_x (either g_eval_na (either g_eval_binop g_eval_u
                     | otherwise = Prelude.exp(a1)
 ---
 \end{code}
+
+A seguinte questão baseava-se em criar uma solução mais eficiente à questão anterior, e para isso era necessário fazer um hilomorfismo, ou seja, juntar ao catamorfismo já feito, um anamorfismo que realiza-se uma otimização na expressão, utilizando, por exemplo, das propriedades neutras da multiplicação.
+Sabendo disso, criamos mais uma vez um diagrama para nos ajudar a chegar à solução do problema.
+
 \hspace*{-2cm}{
 \xymatrix@@R=2cm{
-ExpAr A\ar[d] \ar[rr] &  & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,ExpAr)))\ar[d]\\
+(A,ExpAr A)\ar[d] \ar[rr] &  & (A,1) + ((A,A) + ((BinOp,((A,ExpAr),(A,ExpAr)) + (UnOp,(A,ExpAr)))))\ar[d]\\
 (A,ExpAr A)\ar@@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
 & \hspace*{3cm}{\cong} 
 & {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr),(A,ExpAr)) + (UnOp,(A,ExpAr)))))} \ar@@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
 A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{gopt}
 }
 }
+
+Seguindo o diagrama, chegamos à solução do clean. Como dissemos a solução do gene |gopt| (gene utilizado no catamorfismo do hilomorfismo), foi re-utilizara o gene do catamorfismo da questão anterior, |g_eval_exp|.
 
 \begin{code}
 clean :: (Floating a, Eq a) => ExpAr a-> Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a))) 
@@ -1083,9 +1098,10 @@ clean (Un Negate (Un Negate x)) = outExpAr x
 clean (Un E (N 0)) = i2 (i1 1)
 clean exp = outExpAr exp
 
----
 gopt var = g_eval_exp var
 \end{code}
+
+Nesta questão era pedido que realizasse-mos uma função que fizesse a derivada de uma expressão, através de um catamorfismo. Percebemos através do enunciado que o gene devolvia um par, e que, a função principal só se aproveitava do segundo elemento. Com isso percebemos que o gene colocava a expressão intacta no primeiro elemento do par, e a sua derivada no segundo, para que quando aparece-se uma multiplicação conseguisse completar a derivada, já que esta precisa de parte da expressão antes de ser derivada. Depois de toda a análise, chegamos ao seguinte diagrama.
 
 \hspace*{-2cm}{
 \xymatrix@@R=2cm{
@@ -1093,6 +1109,8 @@ ExpAr A\ar@@/^1pc/[rr]^-{out} \ar[d]_-{sd} & \hspace*{3cm}{\cong} & {\scriptstyl
 (ExpAr A,ExpAr A) & & {\scriptscriptstyle 1 + (A + ((Binop,((ExpAr A , ExpAr A),(ExpAr A , ExpAr A))) + (Un Op , (ExpAr A , ExpAr A))))}\ar[ll]^-{sd\_gen}
 }
 }
+
+Através do diagrama, conseguimos concluir o seguinte gene.
 
 
 \begin{code}
@@ -1110,10 +1128,14 @@ sd_gen = either sd_x (either sd_n (either sd_binop sd_unop)) where
             | otherwise = (Un op x, Bin Product (Un op x) y)
 \end{code}
 
+Esta questão é muito parecida à anterior, só que calculando a derivada com um valor para o x dado. Sendo assim, utilizamos do mesmo raciocinio e fizemos o seguinte diagrama.
+
 \xymatrix@@R=3cm@@C=1cm{
 ExpAr A\ar@@/^1pc/[rr]^-{out} \ar[d]_-{ad} & \hspace*{3cm}{\cong} & { 1 + (A + ((Binop,(ExpAr A , ExpAr A)) + (UnOp , ExpAr A)))} \ar@@/^1pc/[ll]^-{in} \ar[d]^-{recExpAr\ ad}\\
 (A, A) & & {(1 + (A + ((Binop,((A , A),(A , A))) + (Un Op , (A , A)))))}\ar[ll]^-{ad\_gen}
 }
+
+Com o diagrama chegamos ao seguinte gene.
 
 \begin{code}
 ad_gen a = either ad_x (either ad_n (either ad_binop ad_unop)) where
