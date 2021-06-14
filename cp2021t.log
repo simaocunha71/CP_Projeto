@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.2)  11 JUN 2021 23:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.2)  14 JUN 2021 00:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1169,60 +1169,115 @@ l.1800
 \openout5 = `cp2021t.ptb'.
 
 [14]
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \global 
+l.1911 ...xttt{avg[] = 0} e \texttt{length[] = 0}}
+                                                  
+? 
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \global 
+l.1922 ...gualdade Extensional; Lei 72 - Def-Comp}
+                                                  
+? 
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \global 
+l.1933 ...\equiv{ Lei 77 - Def-x; Lei 73 - Def-id}
+                                                  
+? 
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \global 
+l.1944 \just\equiv{ Lei 76 - Def-split}
+                                       
+? 
+! Extra }, or forgotten \right.
+<template> }
+            $\hfil \endtemplate 
+l.1953 \qed
+           
+? 
+! Missing \right. inserted.
+<inserted text> 
+                \right .
+l.1953 \qed
+           
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.1953 \qed
+           
+? 
+[15]
 \openout5 = `cp2021t.ptb'.
 
 \openout5 = `cp2021t.ptb'.
 
 
-Overfull \hbox (52.95636pt too wide) in paragraph at lines 1902--1911
- [][] 
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \global 
+l.2002 ...t\equiv{ Lei 71 - Igualdade Extensional}
+                                                  
+? 
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \global 
+l.2013 ...{ Propriedade do quadrado de um número}
+                                                  
+? 
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \global 
+l.2024 \just\equiv{ Lei 77 - Def-x }
+                                    
+? 
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \global 
+l.2035 \just\equiv{ Lei 76 - Def-split }
+                                        
+? 
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \global 
+l.2045 \qed
+           
+? 
+
+Overfull \hbox (5.8284pt too wide) in alignment at lines 1973--2046
+ [][][] []
  []
 
-
-Overfull \hbox (52.95636pt too wide) in paragraph at lines 1902--1911
- [][][][] 
- []
-
+[16]
 \openout5 = `cp2021t.ptb'.
 
-
-Overfull \hbox (52.29648pt too wide) in paragraph at lines 1913--1925
- [][] 
- []
-
-
-Overfull \hbox (52.29648pt too wide) in paragraph at lines 1913--1925
- [][][][] 
- []
-
-
-Overfull \hbox (52.29648pt too wide) in paragraph at lines 1913--1925
- [][][][] 
- []
-
-[15] (./cp2021t.ind [16] [17
+ (./cp2021t.ind [17] [18
 
 
 ]) (./cp2021t.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1946.
- [18
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2081.
+ [19
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1946.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2081.
  (./cp2021t.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1946.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1946.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2081.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2081.
 
 Package rerunfilecheck Info: File `cp2021t.out' has not changed.
 (rerunfilecheck)             Checksum: 7ABFEEFBC6EDEE4EAEC2BDEF142178CE;514.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1946.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2081.
  ) 
 Here is how much of TeX's memory you used:
- 13349 strings out of 483107
- 193909 string characters out of 5964631
- 526885 words of memory out of 5000000
- 27951 multiletter control sequences out of 15000+600000
- 568152 words of font info for 125 fonts, out of 8000000 for 9000
+ 13368 strings out of 483107
+ 194089 string characters out of 5964631
+ 528885 words of memory out of 5000000
+ 27961 multiletter control sequences out of 15000+600000
+ 570860 words of font info for 135 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  48i,18n,77p,3290b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
@@ -1231,30 +1286,32 @@ f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/stmaryrd/stmary10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/cour
-ier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/xypic/xyatip10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypi
-c/xybtip10.pfb>
-Output written on cp2021t.pdf (18 pages, 344260 bytes).
+amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmti7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/stmaryrd/
+stmary10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/p
+alatino/uplri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypic/xya
+tip10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/xypic/xybtip10.pfb>
+
+Output written on cp2021t.pdf (19 pages, 363252 bytes).
 PDF statistics:
- 449 PDF objects out of 1000 (max. 8388607)
- 396 compressed objects within 4 object streams
- 80 named destinations out of 1000 (max. 500000)
+ 467 PDF objects out of 1000 (max. 8388607)
+ 410 compressed objects within 5 object streams
+ 81 named destinations out of 1000 (max. 500000)
  70 words of extra memory for PDF output out of 10000 (max. 10000000)
 

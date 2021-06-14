@@ -1810,13 +1810,26 @@ Por último, a função \textit{proj} será constituída por um triplo com as fu
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{calcLine}\mathbin{::}\Conid{NPoint}\to (\Conid{NPoint}\to \Conid{OverTime}\;\Conid{NPoint}){}\<[E]%
 \\
 \>[B]{}\Varid{calcLine}\mathrel{=}\Varid{cataList}\;\Varid{h}\;\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{h}\mathrel{=}\bot {}\<[E]%
+\>[4]{}\Varid{h}\mathrel{=}\alt{\Varid{h1}}{\Varid{h2}}{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{h1}\;\anonymous \;\anonymous \mathrel{=}\Varid{nil}{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{h2}\;(\Varid{h},\Varid{t})\;\Varid{l}\mathrel{=}\mathbf{case}\;\Varid{l}\;\mathbf{of}{}\<[E]%
+\\
+\>[4]{}\hsindent{13}{}\<[17]%
+\>[17]{}[\mskip1.5mu \mskip1.5mu]\to \Varid{nil}{}\<[E]%
+\\
+\>[4]{}\hsindent{13}{}\<[17]%
+\>[17]{}(\Varid{x}\mathbin{:}\Varid{xs})\to \lambda \Varid{z}\to \Varid{concat}\mathbin{\$}(\Varid{sequenceA}\;[\mskip1.5mu \Varid{singl}\comp \Varid{linear1d}\;\Varid{h}\;\Varid{x},\Varid{t}\;\Varid{xs}\mskip1.5mu])\;\Varid{z}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{deCasteljau}\mathbin{::}[\mskip1.5mu \Conid{NPoint}\mskip1.5mu]\to \Conid{OverTime}\;\Conid{NPoint}{}\<[E]%
 \\
@@ -1834,10 +1847,7 @@ Por último, a função \textit{proj} será constituída por um triplo com as fu
 
 \subsection*{Problema 4}
 
-Solução para listas não vazias:
-
-Antes de descobrir o avg\textunderscore aux, será necessário transformar [b,q] num \textit{split} de funções para podermos aplicar a lei da troca (Lei 28).
-
+Antes de descobrir o avg\textunderscore aux tanto para listas como para \texttt{LTree}, será necessário transformar [b,q] num \textit{split} de funções para podermos aplicar a lei da troca (Lei 28).
 
 \begin{eqnarray*}
 \start
@@ -1865,9 +1875,9 @@ Antes de descobrir o avg\textunderscore aux, será necessário transformar [b,q]
 \qed
 \end{eqnarray*}
 
-Assim, vamos então determinar avg\textunderscore aux:
+Solução para listas não vazias:
+
 \begin{eqnarray*}
-\start
 	\ensuremath{\Varid{avg\char95 aux}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}}
 %
 \just\equiv{ Definição de avg\textunderscore aux}
@@ -1885,11 +1895,61 @@ Assim, vamos então determinar avg\textunderscore aux:
 %
 \just\equiv{ Definição de in para as listas ([nil,cons]) e Lei 22 - Absorção +}
 %
-     \ensuremath{\begin{lcbr}\alt{\Varid{avg}\comp \Varid{nil}}{\Varid{avg}\comp \Varid{cons}}\mathrel{=}\alt{\p1\comp \Varid{b}\comp \Varid{id}}{\p1\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}})}\\\alt{\length \comp \Varid{nil}}{\length \comp \Varid{cons}}\mathrel{=}\alt{\p2\comp \Varid{b}\comp \Varid{id}}{\p2\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}})}\end{lcbr}}
+     \ensuremath{\begin{lcbr}\alt{\Varid{avg}\comp \Varid{nil}}{\Varid{avg}\comp \Varid{cons}}\mathrel{=}\alt{\p1\comp \Varid{b}\comp \Varid{id}}{\p1\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\length })}\\\alt{\length \comp \Varid{nil}}{\length \comp \Varid{cons}}\mathrel{=}\alt{\p2\comp \Varid{b}\comp \Varid{id}}{\p2\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\length })}\end{lcbr}}
 %
 \just\equiv{ Lei 27 - Eq +, 2 vezes; Lei 1, Natural-id}
 %
-     \ensuremath{\begin{lcbr}\Varid{avg}\comp \Varid{nil}\mathrel{=}\p1\comp \Varid{b}\\\Varid{avg}\comp \Varid{cons}\mathrel{=}\p1\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}})\end{lcbr}\mid \begin{lcbr}\length \comp \Varid{nil}\mathrel{=}\p2\comp \Varid{b}\\\length \comp \Varid{cons}\mathrel{=}\p2\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\Varid{aux}})\end{lcbr}}
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\Varid{avg}\comp \Varid{nil}\mathrel{=}\p1\comp \Varid{b}}\\
+      \ensuremath{\Varid{avg}\comp \Varid{cons}\mathrel{=}\p1\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\length })}\\
+      \ensuremath{\length \comp \Varid{nil}\mathrel{=}\p2\comp \Varid{b}}\\
+      \ensuremath{\length \comp \Varid{cons}\mathrel{=}\p2\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\length })}
+  \end{array}
+\right
+%
+\just\equiv{ Em Haskell, \texttt{avg[] = 0} e \texttt{length[] = 0}}
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\p1\comp \Varid{b}\mathrel{=}\mathrm{0}}\\
+      \ensuremath{\Varid{avg}\comp \Varid{cons}\mathrel{=}\p1\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\length })}\\
+      \ensuremath{\p2\comp \Varid{b}\mathrel{=}\mathrm{0}}\\
+      \ensuremath{\length \comp \Varid{cons}\mathrel{=}\p2\comp \Varid{q}\comp (\Varid{id}\times\conj{\Varid{avg}}{\length })}
+  \end{array}
+\right
+%
+\just\equiv{ Lei 71 - Igualdade Extensional; Lei 72 - Def-Comp}
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\p1\;(\Varid{b}\;\Varid{l})\mathrel{=}\mathrm{0}}\\
+      \ensuremath{\Varid{avg}\;(\Varid{h}\mathbin{:}\Varid{t})\mathrel{=}(\p1\;(\Varid{q}\;((\Varid{id}\times\conj{\Varid{avg}}{\length })\;(\Varid{h}\mathbin{:}\Varid{t}))))}\\
+      \ensuremath{\p2\;(\Varid{b}\;\Varid{l})\mathrel{=}\mathrm{0}}\\
+      \ensuremath{\length \;(\Varid{h}\mathbin{:}\Varid{t})\mathrel{=}(\p2\;(\Varid{q}\;((\Varid{id}\times\conj{\Varid{avg}}{\length })\;(\Varid{h}\mathbin{:}\Varid{t}))))}
+  \end{array}
+\right
+%
+\just\equiv{ Lei 77 - Def-x; Lei 73 - Def-id}
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\p1\;(\Varid{b}\;\Varid{l})\mathrel{=}\mathrm{0}}\\
+      \ensuremath{\Varid{avg}\;(\Varid{h}\mathbin{:}\Varid{t})\mathrel{=}(\p1\;(\Varid{q}\;(\Varid{h},\conj{\Varid{avg}}{\length }\;(\Varid{t}))))}\\
+      \ensuremath{\p2\;(\Varid{b}\;\Varid{l})\mathrel{=}\mathrm{0}}\\
+      \ensuremath{\length \;(\Varid{h}\mathbin{:}\Varid{t})\mathrel{=}(\p2\;(\Varid{q}\;(\Varid{h},\conj{\Varid{avg}}{\length }\;(\Varid{t}))))}
+  \end{array}
+\right
+%
+\just\equiv{ Lei 76 - Def-split}
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\p1\;(\Varid{b}\;\Varid{l})\mathrel{=}\mathrm{0}}\\
+      \ensuremath{\Varid{avg}\;(\Varid{h}\mathbin{:}\Varid{t})\mathrel{=}(\p1\;(\Varid{q}\;(\Varid{h},(\Varid{avg}\;\Varid{t},\length \;\Varid{t}))))}\\
+      \ensuremath{\p2\;(\Varid{b}\;\Varid{l})\mathrel{=}\mathrm{0}}\\
+      \ensuremath{\length \;(\Varid{h}\mathbin{:}\Varid{t})\mathrel{=}(\p2\;(\Varid{q}\;(\Varid{h},(\Varid{avg}\;\Varid{t},\length \;\Varid{t})))}
+  \end{array}
 \qed
 \end{eqnarray*}
 \begin{hscode}\SaveRestoreHook
@@ -1906,10 +1966,85 @@ Assim, vamos então determinar avg\textunderscore aux:
 \>[B]{}\Varid{avg\char95 aux}\mathrel{=}\Varid{cataList}\;\alt{\underline{(\mathrm{0},\mathrm{0})}}{\Varid{aux}}\;\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{aux}\;(\Varid{elem},(\Varid{media},\Varid{comprimento}))\mathrel{=}((\Varid{elem}\mathbin{+}\Varid{media}\mathbin{*}\Varid{comprimento})\mathbin{/}(\Varid{comprimento}\mathbin{+}\mathrm{1}),\Varid{comprimento}\mathbin{+}\mathrm{1}){}\<[E]%
+\>[9]{}\Varid{aux}\;(\Varid{x},(\Varid{md},\Varid{c}))\mathrel{=}((\Varid{x}\mathbin{+}\Varid{md}\mathbin{*}\Varid{c})\mathbin{/}(\Varid{c}\mathbin{+}\mathrm{1}),\Varid{c}\mathbin{+}\mathrm{1}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 Solução para árvores de tipo \LTree:
+\begin{eqnarray*}
+\ensuremath{\Varid{avg\char95 aux}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}}
+%
+\just\equiv{ Definição de avg\textunderscore aux}
+%
+     \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}}
+%
+\just\equiv{ Resultado calculado em cima }
+%
+     \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\conj{\alt{\p1\comp \Varid{b}}{\p1\comp \Varid{q}}}{\alt{\p2\comp \Varid{b}}{\p2\comp \Varid{q}}}}}
+\just\equiv{ Lei 52 - Fokkinga e Functor de LTree: F f = id + $f^2$} 
+%
+     \ensuremath{\begin{lcbr}\Varid{avg}\comp \mathbf{in}\mathrel{=}\alt{\p1\comp \Varid{b}}{\p1\comp \Varid{q}}\comp (\Varid{id}\mathbin{+}\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2})\\\length \comp \mathbf{in}\mathrel{=}\alt{\p2\comp \Varid{b}}{\p2\comp \Varid{q}}\comp (\Varid{id}\mathbin{+}\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2})\end{lcbr}}
+%
+\just\equiv{ Definição de in para as LTree ([Leaf,Fork]) e Lei 22 - Absorção +} 
+%
+     \ensuremath{\begin{lcbr}\alt{\Varid{avg}\comp \Conid{Leaf}}{\Varid{avg}\comp \Conid{Fork}}\mathrel{=}\alt{\p1\comp \Varid{b}\comp \Varid{id}}{\p1\comp \Varid{q}\comp (\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2})}\\\alt{\length \comp \Conid{Leaf}}{\length \comp \Conid{Fork}}\mathrel{=}\alt{\p2\comp \Varid{b}\comp \Varid{id}}{\p2\comp \Varid{q}\comp (\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2})}\end{lcbr}}
+%
+\just\equiv{ Lei 27 - Eq +, 2 vezes; Lei 1, Natural-id}
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\Varid{avg}\comp \Conid{Leaf}\mathrel{=}\p1\comp \Varid{b}}\\
+      \ensuremath{\Varid{avg}\comp \Conid{Fork}\mathrel{=}\p1\comp \Varid{q}\comp (\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2})}\\
+      \ensuremath{\length \comp \Conid{Leaf}\mathrel{=}\p2\comp \Varid{b}}\\
+      \ensuremath{\length \comp \Conid{Fork}\mathrel{=}\p2\comp \Varid{q}\comp (\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2})}
+  \end{array}
+\right
+%
+\just\equiv{ Lei 71 - Igualdade Extensional}
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\Varid{avg}\;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p1\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\Varid{avg}\;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p1\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2}))\;(\Varid{fl},\Varid{fr})}\\
+      \ensuremath{\length \;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p2\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr})\mathrel{=}\p2\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2}))\;(\Varid{fl},\Varid{fr}))}
+  \end{array}
+\right
+%
+\just\equiv{ Propriedade do quadrado de um número} 
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\Varid{avg}\;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p1\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\Varid{avg}\;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p1\;(\Varid{q}\;\conj{\Varid{avg}}{\length }\times\conj{\Varid{avg}}{\length })\;(\Varid{fl},\Varid{fr})}\\
+      \ensuremath{\length \;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p2\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr})\mathrel{=}\p2\;(\Varid{q}\;\conj{\Varid{avg}}{\length }\times\conj{\Varid{avg}}{\length })\;(\Varid{fl},\Varid{fr})}\\
+  \end{array}
+\right
+%
+\just\equiv{ Lei 77 - Def-x }
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\Varid{avg}\;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p1\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\Varid{avg}\;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p1\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr}),\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr})))}\\
+      \ensuremath{\length \;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p2\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr})\mathrel{=}\p2\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr}),\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr})))}\\
+  \end{array}
+\right
+%
+\just\equiv{ Lei 76 - Def-split }
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\Varid{avg}\;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p1\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\Varid{avg}\;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p1\;(\Varid{q}\;((\Varid{avg}\;\Varid{fl},\length \;\Varid{fr}),(\Varid{avg}\;\Varid{fl},\length \;\Varid{fr})))}\\
+      \ensuremath{\length \;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p2\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr})\mathrel{=}\p2\;(\Varid{q}\;((\Varid{avg}\;\Varid{fl},\length \;\Varid{fr}),(\Varid{avg}\;\Varid{fl},\length \;\Varid{fr})))}\\
+  \end{array}
+\right
+\qed
+\end{eqnarray*}
+
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1920,7 +2055,7 @@ Solução para árvores de tipo \LTree:
 \>[4]{}\Varid{gene}\mathrel{=}\alt{\lambda \Varid{l}\to (\Varid{l},\mathrm{1})}{\Varid{aux}}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{aux}\;((\Varid{md1},\Varid{comp1}),(\Varid{md2},\Varid{comp2}))\mathrel{=}((\Varid{md1}\mathbin{*}\Varid{comp1}\mathbin{+}\Varid{comp2}\mathbin{*}\Varid{md2})\mathbin{/}(\Varid{comp1}\mathbin{+}\Varid{comp2}),\Varid{comp1}\mathbin{+}\Varid{comp2}){}\<[E]%
+\>[4]{}\Varid{aux}\;((\Varid{md1},\Varid{c1}),(\Varid{md2},\Varid{c2}))\mathrel{=}((\Varid{md1}\mathbin{*}\Varid{c1}\mathbin{+}\Varid{c2}\mathbin{*}\Varid{md2})\mathbin{/}(\Varid{c1}\mathbin{+}\Varid{c2}),\Varid{c1}\mathbin{+}\Varid{c2}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 

@@ -1179,7 +1179,12 @@ Por último, a função \textit{proj} será constituída por um triplo com as fu
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
 calcLine = cataList h where
-   h = undefined
+   h = either h1 h2
+   h1 _ _ = nil
+   h2 (h,t) l = case l of 
+                [] -> nil 
+                (x:xs) -> \z -> concat $ (sequenceA [singl . linear1d h x, t xs]) z
+                
 
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg coalg where
@@ -1191,10 +1196,7 @@ hyloAlgForm = undefined
 
 \subsection*{Problema 4}
 
-Solução para listas não vazias:
-
-Antes de descobrir o avg\textunderscore aux, será necessário transformar [b,q] num \textit{split} de funções para podermos aplicar a lei da troca (Lei 28).
-
+Antes de descobrir o avg\textunderscore aux tanto para listas como para \texttt{LTree}, será necessário transformar [b,q] num \textit{split} de funções para podermos aplicar a lei da troca (Lei 28).
 
 \begin{eqnarray*}
 \start
@@ -1222,9 +1224,9 @@ Antes de descobrir o avg\textunderscore aux, será necessário transformar [b,q]
 \qed
 \end{eqnarray*}
 
-Assim, vamos então determinar avg\textunderscore aux:
+Solução para listas não vazias:
+
 \begin{eqnarray*}
-\start
 	|avg_aux = cata (either b q)|
 %
 \just\equiv{ Definição de avg\textunderscore aux}
@@ -1247,22 +1249,64 @@ Assim, vamos então determinar avg\textunderscore aux:
 \just\equiv{ Definição de in para as listas ([nil,cons]) e Lei 22 - Absorção +}
 %
      |lcbr(
-     either (avg . nil) (avg . cons) = either (p1 . b . id) (p1 . q . (id >< split avg aux)) 
+     either (avg . nil) (avg . cons) = either (p1 . b . id) (p1 . q . (id >< split avg length)) 
      )(
-     either (length . nil) (length . cons) = either (p2 . b . id) (p2 . q . (id >< split avg aux)) 
+     either (length . nil) (length . cons) = either (p2 . b . id) (p2 . q . (id >< split avg length)) 
      )|
 %
 \just\equiv{ Lei 27 - Eq +, 2 vezes; Lei 1, Natural-id}
 %
-     |lcbr(
-     avg . nil = p1 . b 
-     )(
-     avg . cons = p1 . q . (id >< split avg aux)
-     )||lcbr(
-     length . nil = p2 . b 
-     )(
-     length . cons = p2 . q . (id >< split avg aux)
-     )|
+\left\{
+   \begin{array}{llll}
+      |avg . nil = p1 . b |\\
+      |avg . cons = p1 . q . (id >< split avg length)|\\
+      |length . nil = p2 . b |\\
+      |length . cons = p2 . q . (id >< split avg length)|
+  \end{array}
+\right
+%
+\just\equiv{ Em Haskell, \texttt{avg[] = 0} e \texttt{length[] = 0}}
+%
+\left\{
+   \begin{array}{llll}
+      |p1 . b = 0|\\
+      |avg . cons = p1 . q . (id >< split avg length)|\\
+      |p2 . b = 0 |\\
+      |length . cons = p2 . q . (id >< split avg length)|
+  \end{array}
+\right
+%
+\just\equiv{ Lei 71 - Igualdade Extensional; Lei 72 - Def-Comp}
+%
+\left\{
+   \begin{array}{llll}
+      |p1 (b l) = 0|\\
+      |avg(h:t) = (p1(q((id >< split avg length) (h:t)))) |\\
+      |p2 (b l) = 0 |\\
+      |length(h:t) = (p2(q((id><split avg length) (h:t))))|
+  \end{array}
+\right
+%
+\just\equiv{ Lei 77 - Def-x; Lei 73 - Def-id}
+%
+\left\{
+   \begin{array}{llll}
+      |p1 (b l) = 0|\\
+      |avg (h:t) = (p1 (q (h,(split avg length) (t)))) |\\
+      |p2 (b l) = 0 |\\
+      |length (h:t) = (p2 (q (h,(split avg length) (t)))) |
+  \end{array}
+\right
+%
+\just\equiv{ Lei 76 - Def-split}
+%
+\left\{
+   \begin{array}{llll}
+      |p1 (b l) = 0|\\
+      |avg (h:t) = (p1 (q (h,(avg t, length t)))) |\\
+      |p2 (b l) = 0 |\\
+      |length (h:t) = (p2 (q (h,(avg t, length t))) |
+  \end{array}
 \qed
 \end{eqnarray*}
 \begin{code}
@@ -1271,14 +1315,97 @@ avg = p1.avg_aux
 
 \begin{code}
 avg_aux = cataList (either (const (0,0)) aux) where
-        aux (elem,(media,comprimento)) = ((elem + media * comprimento)/(comprimento+1),comprimento+1) 
+        aux (x, (md, c)) = ((x + md * c) / (c + 1), c + 1)
         
 \end{code}
 Solução para árvores de tipo \LTree:
+\begin{eqnarray*}
+|avg_aux = cata (either b q)|
+%
+\just\equiv{ Definição de avg\textunderscore aux}
+%
+     |split avg length = cata (either b q)|
+%
+\just\equiv{ Resultado calculado em cima }
+%
+     |split avg length = cata (split (either (p1 . b) (p1 . q)) (either (p2 . b) (p2 . q)))|
+\just\equiv{ Lei 52 - Fokkinga e Functor de LTree: F f = id + $f^2$} 
+%
+     |lcbr(
+     avg.in = either (p1 . b) (p1 . q) . (id + split avg length ^2)
+     )(
+     length.in = either (p2 . b) (p2 . q) . (id + split avg length ^2)
+     )|
+%
+\just\equiv{ Definição de in para as LTree ([Leaf,Fork]) e Lei 22 - Absorção +} 
+%
+     |lcbr(
+     either (avg . Leaf) (avg . Fork) = either (p1 . b . id) (p1 . q . (split avg length^2)) 
+     )(
+     either (length . Leaf) (length . Fork) = either (p2 . b . id) (p2 . q . (split avg length^2)) 
+     )|
+%
+\just\equiv{ Lei 27 - Eq +, 2 vezes; Lei 1, Natural-id}
+%
+\left\{
+   \begin{array}{llll}
+      |avg . Leaf = p1 . b |\\
+      |avg . Fork = p1 . q . (split avg length^2)|\\
+      |length . Leaf = p2 . b |\\
+      |length . Fork = p2 . q . (split avg length^2)|
+  \end{array}
+\right
+%
+\just\equiv{ Lei 71 - Igualdade Extensional}
+%
+\left\{
+   \begin{array}{llll}
+      |avg (Leaf lf) = p1 (b lf)|\\
+      |avg (Fork (fl,fr)) = p1 (q (split avg length^2)) (fl,fr)|\\
+      |length (Leaf lf) = p2 (b lf) |\\
+      |length (Fork (fl,fr) = p2 (q (split avg length^2)) (fl,fr))|
+  \end{array}
+\right
+%
+\just\equiv{ Propriedade do quadrado de um número} 
+%
+\left\{
+   \begin{array}{llll}
+      |avg (Leaf lf) = p1 (b lf)|\\
+      |avg (Fork (fl,fr)) = p1 (q (split avg length) >< (split avg length)) (fl,fr)|\\
+      |length (Leaf lf) = p2 (b lf) |\\
+      |length (Fork (fl,fr) = p2 (q (split avg length) >< (split avg length)) (fl,fr)|\\
+  \end{array}
+\right
+%
+\just\equiv{ Lei 77 - Def-x }
+%
+\left\{
+   \begin{array}{llll}
+      |avg (Leaf lf) = p1 (b lf)|\\
+      |avg (Fork (fl,fr)) = p1 (q ((split avg length) (fl,fr),(split avg length)(fl,fr)))|\\
+      |length (Leaf lf) = p2 (b lf) |\\
+      |length (Fork (fl,fr) = p2 (q ((split avg length) (fl,fr),(split avg length)(fl,fr)))|\\
+  \end{array}
+\right
+%
+\just\equiv{ Lei 76 - Def-split }
+%
+\left\{
+   \begin{array}{llll}
+      |avg (Leaf lf) = p1 (b lf)|\\
+      |avg (Fork (fl,fr)) = p1 (q ((avg fl, length fr),(avg fl, length fr)))|\\
+      |length (Leaf lf) = p2 (b lf) |\\
+      |length (Fork (fl,fr) = p2 (q ((avg fl, length fr),(avg fl, length fr)))|\\
+  \end{array}
+\right
+\qed
+\end{eqnarray*}
+
 \begin{code}
 avgLTree = p1.cataLTree gene where
    gene = either (\l -> (l,1)) aux
-   aux ((md1, comp1), (md2,comp2)) = ((md1 * comp1 + comp2 * md2) / (comp1 + comp2), comp1 + comp2 )
+   aux ((md1, c1), (md2, c2)) = ((md1 * c1 + c2 * md2) / (c1 + c2), c1 + c2)
 \end{code}
 
 \subsection*{Problema 5}
