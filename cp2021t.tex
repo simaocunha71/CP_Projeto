@@ -1558,12 +1558,12 @@ São dadas:
 \end{hscode}\resethooks
 Definir:
 
+\xymatrix{
+ExpAr \ar@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,ExpAr))) \ar@/^2pc/[ll]^-{in} 
+}
+
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{outExpAr}\mathbin{::}\Conid{ExpAr}\;\Varid{a}\to ()+(\Varid{a}+((\Conid{BinOp},(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}))+(\Conid{UnOp},\Conid{ExpAr}\;\Varid{a}))){}\<[E]%
 \\
@@ -1574,13 +1574,34 @@ Definir:
 \>[B]{}\Varid{outExpAr}\;(\Conid{Bin}\;\Varid{op}\;\Varid{exp1}\;\Varid{exp2})\mathrel{=}i_2\;(i_2\;(i_1\;(\Varid{op},(\Varid{exp1},\Varid{exp2})))){}\<[E]%
 \\
 \>[B]{}\Varid{outExpAr}\;(\Conid{Un}\;\Varid{op}\;\Varid{exp1})\mathrel{=}i_2\;(i_2\;(i_2\;(\Varid{op},\Varid{exp1}))){}\<[E]%
-\\
-\>[B]{}\mbox{\onelinecomment }{}\<[E]%
-\\
+\ColumnHook
+\end{hscode}\resethooks
+
+A função recExpAr recebe uma função f e chama a função baseExpAr, aplicando esse f apenas aos argumentos ExpAr, deixando o resto intacto com a função id. Fazendo assim a função recursiva do tipo ExpAr.
+\par Chegamos à conclusão da expressão de \texttt{recExpAr} através da dica dada pelo professor nas FAQ's da página da disciplina (Q9).
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{recExpAr}\;\Varid{f}\mathrel{=}\Varid{baseExpAr}\;\Varid{id}\;\Varid{id}\;\Varid{id}\;\Varid{f}\;\Varid{f}\;\Varid{id}\;\Varid{f}{}\<[E]%
-\\
-\>[B]{}\mbox{\onelinecomment }{}\<[E]%
-\\
+\ColumnHook
+\end{hscode}\resethooks
+
+
+\xymatrix@R=2.5cm{
+(A,ExpAr A)\ar@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
+& \hspace*{3cm}{\cong} 
+& {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr A),(A,ExpAr A)) + (UnOp,(A,ExpAr A)))))} \ar@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
+A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
+}
+
+\textit{recExpAr eval\textunderscore exp} = id + id + id + eval\textunderscore exp + eval\textunderscore exp + id + eval\textunderscore exp
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{var}\mathrel{=}\alt{\Varid{g\char95 eval\char95 x}}{\alt{\Varid{g\char95 eval\char95 na}}{\alt{\Varid{g\char95 eval\char95 binop}}{\Varid{g\char95 eval\char95 unop}}}}{}\<[E]%
 \\
 \>[B]{}\hsindent{17}{}\<[17]%
@@ -1593,19 +1614,39 @@ Definir:
 \>[19]{}\Varid{g\char95 eval\char95 na}\;\Varid{b}\mathrel{=}\Varid{b}{}\<[E]%
 \\
 \>[17]{}\hsindent{2}{}\<[19]%
-\>[19]{}\Varid{g\char95 eval\char95 binop}\;(\Varid{op},(\Varid{a1},\Varid{a2}))\mid \Varid{op}\equiv \Conid{Sum}\mathrel{=}\Varid{a1}\mathbin{+}\Varid{a2}{}\<[E]%
+\>[19]{}\Varid{g\char95 eval\char95 binop}\;(\Varid{op},(\Varid{a1},\Varid{a2})){}\<[E]%
 \\
-\>[19]{}\hsindent{26}{}\<[45]%
-\>[45]{}\mid \Varid{otherwise}\mathrel{=}\Varid{a1}\mathbin{*}\Varid{a2}{}\<[E]%
+\>[19]{}\hsindent{2}{}\<[21]%
+\>[21]{}\mid \Varid{op}\equiv \Conid{Sum}\mathrel{=}\Varid{a1}\mathbin{+}\Varid{a2}{}\<[E]%
+\\
+\>[19]{}\hsindent{2}{}\<[21]%
+\>[21]{}\mid \Varid{otherwise}\mathrel{=}\Varid{a1}\mathbin{*}\Varid{a2}{}\<[E]%
 \\
 \>[17]{}\hsindent{2}{}\<[19]%
-\>[19]{}\Varid{g\char95 eval\char95 unop}\;(\Varid{op},\Varid{a1})\mid \Varid{op}\equiv \Conid{Negate}\mathrel{=}(\mathbin{-}\mathrm{1})\mathbin{*}\Varid{a1}{}\<[E]%
+\>[19]{}\Varid{g\char95 eval\char95 unop}\;(\Varid{op},\Varid{a1}){}\<[E]%
 \\
-\>[19]{}\hsindent{20}{}\<[39]%
-\>[39]{}\mid \Varid{otherwise}\mathrel{=}\Varid{\Conid{Prelude}.exp}\;(\Varid{a1}){}\<[E]%
+\>[19]{}\hsindent{2}{}\<[21]%
+\>[21]{}\mid \Varid{op}\equiv \Conid{Negate}\mathrel{=}(\mathbin{-}\mathrm{1})\mathbin{*}\Varid{a1}{}\<[E]%
+\\
+\>[19]{}\hsindent{2}{}\<[21]%
+\>[21]{}\mid \Varid{otherwise}\mathrel{=}\Varid{\Conid{Prelude}.exp}\;(\Varid{a1}){}\<[E]%
 \\
 \>[B]{}\mbox{\onelinecomment }{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\hspace*{-2cm}{
+\xymatrix@R=2cm{
+ExpAr A\ar[d] \ar[rr] &  & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,ExpAr)))\ar[d]\\
+(A,ExpAr A)\ar@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
+& \hspace*{3cm}{\cong} 
+& {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr),(A,ExpAr)) + (UnOp,(A,ExpAr)))))} \ar@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
+A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{gopt}
+}
+}
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{clean}\mathbin{::}(\Conid{Floating}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{ExpAr}\;\Varid{a}\to ()+(\Varid{a}+((\Conid{BinOp},(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}))+(\Conid{UnOp},\Conid{ExpAr}\;\Varid{a}))){}\<[E]%
 \\
 \>[B]{}\Varid{clean}\;(\Conid{Bin}\;\Conid{Sum}\;(\Conid{N}\;\mathrm{0})\;\Varid{b})\mathrel{=}\Varid{outExpAr}\;\Varid{b}{}\<[E]%
@@ -1634,12 +1675,19 @@ Definir:
 \ColumnHook
 \end{hscode}\resethooks
 
+\hspace*{-2cm}{
+\xymatrix@R=2cm{
+ExpAr A\ar@/^1pc/[rr]^-{out} \ar[d]_-{sd} & \hspace*{3cm}{\cong} & {\scriptstyle 1 + (A + (Binop,(ExpAr A , ExpAr A)) + (UnOp , ExpAr A)))} \ar@/^1pc/[ll]^-{in} \ar[d]^-{recExpAr\ sd}\\
+(ExpAr A,ExpAr A) & & {\scriptscriptstyle 1 + (A + ((Binop,((ExpAr A , ExpAr A),(ExpAr A , ExpAr A))) + (Un Op , (ExpAr A , ExpAr A))))}\ar[ll]^-{sd\_gen}
+}
+}
+
+
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{11}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{sd\char95 gen}\mathbin{::}\Conid{Floating}\;\Varid{a}\Rightarrow {}\<[E]%
 \\
@@ -1658,24 +1706,34 @@ Definir:
 \>[12]{}\Varid{sd\char95 n}\;\Varid{x}\mathrel{=}(\Conid{N}\;\Varid{x},\Conid{N}\;\mathrm{0}){}\<[E]%
 \\
 \>[B]{}\hsindent{12}{}\<[12]%
-\>[12]{}\Varid{sd\char95 binop}\;(\Varid{op},((\Varid{x1},\Varid{y1}),(\Varid{x2},\Varid{y2})))\mid \Varid{op}\equiv \Conid{Sum}\mathrel{=}((\Conid{Bin}\;\Conid{Sum}\;\Varid{x1}\;\Varid{x2}),(\Conid{Bin}\;\Conid{Sum}\;\Varid{y1}\;\Varid{y2})){}\<[E]%
+\>[12]{}\Varid{sd\char95 binop}\;(\Varid{op},((\Varid{x1},\Varid{y1}),(\Varid{x2},\Varid{y2}))){}\<[E]%
 \\
-\>[12]{}\hsindent{34}{}\<[46]%
-\>[46]{}\mid \Varid{otherwise}\mathrel{=}((\Conid{Bin}\;\Conid{Product}\;\Varid{x1}\;\Varid{x2}),(\Conid{Bin}\;\Conid{Sum}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{x1}\;\Varid{y2})\;(\Conid{Bin}\;\Conid{Product}\;\Varid{y1}\;\Varid{x2}))){}\<[E]%
+\>[12]{}\hsindent{1}{}\<[13]%
+\>[13]{}\mid \Varid{op}\equiv \Conid{Sum}\mathrel{=}((\Conid{Bin}\;\Conid{Sum}\;\Varid{x1}\;\Varid{x2}),(\Conid{Bin}\;\Conid{Sum}\;\Varid{y1}\;\Varid{y2})){}\<[E]%
+\\
+\>[12]{}\hsindent{1}{}\<[13]%
+\>[13]{}\mid \Varid{otherwise}\mathrel{=}((\Conid{Bin}\;\Conid{Product}\;\Varid{x1}\;\Varid{x2}),(\Conid{Bin}\;\Conid{Sum}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{x1}\;\Varid{y2})\;(\Conid{Bin}\;\Conid{Product}\;\Varid{y1}\;\Varid{x2}))){}\<[E]%
 \\
 \>[B]{}\hsindent{12}{}\<[12]%
-\>[12]{}\Varid{sd\char95 unop}\;(\Varid{op},(\Varid{x},\Varid{y}))\mid \Varid{op}\equiv \Conid{Negate}\mathrel{=}((\Conid{Un}\;\Varid{op}\;\Varid{x}),(\Conid{Un}\;\Varid{op}\;\Varid{y})){}\<[E]%
+\>[12]{}\Varid{sd\char95 unop}\;(\Varid{op},(\Varid{x},\Varid{y})){}\<[E]%
 \\
-\>[12]{}\hsindent{21}{}\<[33]%
-\>[33]{}\mid \Varid{otherwise}\mathrel{=}(\Conid{Un}\;\Varid{op}\;\Varid{x},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Varid{op}\;\Varid{x})\;\Varid{y}){}\<[E]%
+\>[12]{}\hsindent{1}{}\<[13]%
+\>[13]{}\mid \Varid{op}\equiv \Conid{Negate}\mathrel{=}((\Conid{Un}\;\Varid{op}\;\Varid{x}),(\Conid{Un}\;\Varid{op}\;\Varid{y})){}\<[E]%
+\\
+\>[12]{}\hsindent{1}{}\<[13]%
+\>[13]{}\mid \Varid{otherwise}\mathrel{=}(\Conid{Un}\;\Varid{op}\;\Varid{x},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Varid{op}\;\Varid{x})\;\Varid{y}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
+
+\xymatrix@R=3cm@C=1cm{
+ExpAr A\ar@/^1pc/[rr]^-{out} \ar[d]_-{ad} & \hspace*{3cm}{\cong} & { 1 + (A + ((Binop,(ExpAr A , ExpAr A)) + (UnOp , ExpAr A)))} \ar@/^1pc/[ll]^-{in} \ar[d]^-{recExpAr\ ad}\\
+(A, A) & & {(1 + (A + ((Binop,((A , A),(A , A))) + (Un Op , (A , A)))))}\ar[ll]^-{ad\_gen}
+}
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{ad\char95 gen}\;\Varid{a}\mathrel{=}\alt{\Varid{ad\char95 x}}{\alt{\Varid{ad\char95 n}}{\alt{\Varid{ad\char95 binop}}{\Varid{ad\char95 unop}}}}\;\mathbf{where}{}\<[E]%
 \\
@@ -1686,16 +1744,22 @@ Definir:
 \>[12]{}\Varid{ad\char95 n}\;\Varid{x}\mathrel{=}(\Varid{x},\mathrm{0}){}\<[E]%
 \\
 \>[B]{}\hsindent{12}{}\<[12]%
-\>[12]{}\Varid{ad\char95 binop}\;(\Varid{op},((\Varid{x1},\Varid{y1}),(\Varid{x2},\Varid{y2})))\mid \Varid{op}\equiv \Conid{Sum}\mathrel{=}(\Varid{x1}\mathbin{+}\Varid{x2},\Varid{y1}\mathbin{+}\Varid{y2}){}\<[E]%
+\>[12]{}\Varid{ad\char95 binop}\;(\Varid{op},((\Varid{x1},\Varid{y1}),(\Varid{x2},\Varid{y2}))){}\<[E]%
 \\
-\>[12]{}\hsindent{34}{}\<[46]%
-\>[46]{}\mid \Varid{otherwise}\mathrel{=}(\Varid{x1}\mathbin{*}\Varid{x2},(\Varid{x1}\mathbin{*}\Varid{y2})\mathbin{+}(\Varid{y1}\mathbin{*}\Varid{x2})){}\<[E]%
+\>[12]{}\hsindent{1}{}\<[13]%
+\>[13]{}\mid \Varid{op}\equiv \Conid{Sum}\mathrel{=}(\Varid{x1}\mathbin{+}\Varid{x2},\Varid{y1}\mathbin{+}\Varid{y2}){}\<[E]%
+\\
+\>[12]{}\hsindent{1}{}\<[13]%
+\>[13]{}\mid \Varid{otherwise}\mathrel{=}(\Varid{x1}\mathbin{*}\Varid{x2},(\Varid{x1}\mathbin{*}\Varid{y2})\mathbin{+}(\Varid{y1}\mathbin{*}\Varid{x2})){}\<[E]%
 \\
 \>[B]{}\hsindent{12}{}\<[12]%
-\>[12]{}\Varid{ad\char95 unop}\;(\Varid{op},(\Varid{x},\Varid{y}))\mid \Varid{op}\equiv \Conid{Negate}\mathrel{=}((\mathbin{-}\mathrm{1})\mathbin{*}\Varid{x},(\mathbin{-}\mathrm{1})\mathbin{*}\Varid{y}){}\<[E]%
+\>[12]{}\Varid{ad\char95 unop}\;(\Varid{op},(\Varid{x},\Varid{y})){}\<[E]%
 \\
-\>[12]{}\hsindent{21}{}\<[33]%
-\>[33]{}\mid \Varid{otherwise}\mathrel{=}(\Varid{\Conid{Prelude}.exp}\;(\Varid{x}),\Varid{y}\mathbin{*}\Varid{\Conid{Prelude}.exp}\;(\Varid{x})){}\<[E]%
+\>[12]{}\hsindent{1}{}\<[13]%
+\>[13]{}\mid \Varid{op}\equiv \Conid{Negate}\mathrel{=}((\mathbin{-}\mathrm{1})\mathbin{*}\Varid{x},(\mathbin{-}\mathrm{1})\mathbin{*}\Varid{y}){}\<[E]%
+\\
+\>[12]{}\hsindent{1}{}\<[13]%
+\>[13]{}\mid \Varid{otherwise}\mathrel{=}(\Varid{\Conid{Prelude}.exp}\;(\Varid{x}),\Varid{y}\mathbin{*}\Varid{\Conid{Prelude}.exp}\;(\Varid{x})){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
@@ -1731,14 +1795,18 @@ C_{n+1} = \frac{2(2n+1)}{n+2} C_n\\
 \end{array}
 \right. $$
 
-que pode ser deduzida em \catalan 1. \par
+\[    C_n = \frac{(2n)!}{(n+1)! (n)! } \Rightarrow C_{n-1} = \frac{(2(n-1))!}{(n)! (n-1)! } \]
+\[  \frac{C_n}{C_{n-1}} = \frac{(2n)(2n-1)(2n-2)!(n-1)!}{(n+1)n(n-1)!(2n-2)!} = \frac{2(2n-1)}{n+1}\]
+\[  \Rightarrow C_n = \frac{2(2n-1)}{n+1} C_{n-1}\]
+
+que pode ser deduzida \href{https://math.stackexchange.com/questions/337842/simplifying-catalan-number-recurrence-relation}{aqui}.
 
 Assim sendo, vamos começar a desmontar estas duas equações:
 
 $$ \left\{
 \begin{array}{lr}
 C(0) = 1\\
-C(n+1) = (h(n) / r(n)) * C(n) \\
+C(n+1) = (h(n) / r(n)) * C(n)
 \end{array}
 \right. $$
 
@@ -1774,6 +1842,7 @@ h(n+1) = h(n)+4
 \end{array}
 \right. $$
 
+\newline
 $$ \left\{
 \begin{array}{lr}
 r(0) = 2\\
@@ -1971,6 +2040,7 @@ Solução para listas não vazias:
 \end{hscode}\resethooks
 Solução para árvores de tipo \LTree:
 \begin{eqnarray*}
+
 \ensuremath{\Varid{avg\char95 aux}\mathrel{=}\cata{\alt{\Varid{b}}{\Varid{q}}}}
 %
 \just\equiv{ Definição de avg\textunderscore aux}
@@ -1980,6 +2050,7 @@ Solução para árvores de tipo \LTree:
 \just\equiv{ Resultado calculado em cima }
 %
      \ensuremath{\conj{\Varid{avg}}{\length }\mathrel{=}\cata{\conj{\alt{\p1\comp \Varid{b}}{\p1\comp \Varid{q}}}{\alt{\p2\comp \Varid{b}}{\p2\comp \Varid{q}}}}}
+%
 \just\equiv{ Lei 52 - Fokkinga e Functor de LTree: F f = id + $f^2$} 
 %
      \ensuremath{\begin{lcbr}\Varid{avg}\comp \mathbf{in}\mathrel{=}\alt{\p1\comp \Varid{b}}{\p1\comp \Varid{q}}\comp (\Varid{id}\mathbin{+}\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2})\\\length \comp \mathbf{in}\mathrel{=}\alt{\p2\comp \Varid{b}}{\p2\comp \Varid{q}}\comp (\Varid{id}\mathbin{+}\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2})\end{lcbr}}

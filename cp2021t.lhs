@@ -17,6 +17,7 @@
 \def\aspas#1{``#1"}
 %================= lhs2tex=====================================================%
 %include polycode.fmt 
+%format (up (a) (b)) = “{“ a “}^{“ b “}”
 %format (div (x)(y)) = x "\div " y
 %format succ = "\succ "
 %format ==> = "\Longrightarrow "
@@ -1018,25 +1019,58 @@ ad v = p2 . cataExpAr (ad_gen v)
 \end{code}
 Definir:
 
+\xymatrix{
+ExpAr \ar@@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,ExpAr))) \ar@@/^2pc/[ll]^-{in} 
+}
+
 \begin{code}
 outExpAr :: ExpAr a-> Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a)))
 outExpAr X = i1 ()
 outExpAr (N x) = i2 (i1 x)
 outExpAr (Bin op exp1 exp2) = i2 (i2 (i1 (op ,(exp1, exp2))))
 outExpAr (Un op exp1) = i2 (i2 (i2 (op, exp1)))
----
+\end{code}
+
+A função recExpAr recebe uma função f e chama a função baseExpAr, aplicando esse f apenas aos argumentos ExpAr, deixando o resto intacto com a função id. Fazendo assim a função recursiva do tipo ExpAr.
+\par Chegamos à conclusão da expressão de \texttt{recExpAr} através da dica dada pelo professor nas FAQ's da página da disciplina (Q9).
+
+\begin{code}
 recExpAr f = baseExpAr id id id f f id f
----
+\end{code}
+
+
+\xymatrix@@R=2.5cm{
+(A,ExpAr A)\ar@@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
+& \hspace*{3cm}{\cong} 
+& {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr A),(A,ExpAr A)) + (UnOp,(A,ExpAr A)))))} \ar@@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
+A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
+}
+
+\textit{recExpAr eval\textunderscore exp} = id + id + id + eval\textunderscore exp + eval\textunderscore exp + id + eval\textunderscore exp
+\begin{code}
 g_eval_exp var = either g_eval_x (either g_eval_na (either g_eval_binop g_eval_unop)) 
                 where
                   g_eval_x () = var
                   g_eval_na b = b
-                  g_eval_binop (op,(a1,a2)) |op == Sum = a1 + a2
-                                            |otherwise = a1 * a2
-                  g_eval_unop (op,a1) | op == Negate = (-1)*a1
-                                      | otherwise = Prelude.exp(a1)
+                  g_eval_binop (op,(a1,a2)) 
+                    |op == Sum = a1 + a2
+                    |otherwise = a1 * a2
+                  g_eval_unop (op,a1) 
+                    | op == Negate = (-1)*a1
+                    | otherwise = Prelude.exp(a1)
 ---
+\end{code}
+\hspace*{-2cm}{
+\xymatrix@@R=2cm{
+ExpAr A\ar[d] \ar[rr] &  & 1 + (A + ((BinOp,(ExpAr,ExpAr))+ (UnOp,ExpAr)))\ar[d]\\
+(A,ExpAr A)\ar@@/^3pc/[rr]^-{out} \ar[d]_-{eval\_exp} 
+& \hspace*{3cm}{\cong} 
+& {\scriptstyle(A,1) + ((A,A) + ((BinOp,((A,ExpAr),(A,ExpAr)) + (UnOp,(A,ExpAr)))))} \ar@@/^3pc/[ll]^-{in} \ar[d]^-{recExpAr \ eval\_exp}\\
+A & & { (A,1) + ((A,A) + ((BinOp,A) + (UnOp,A)))}\ar[ll]^-{gopt}
+}
+}
 
+\begin{code}
 clean :: (Floating a, Eq a) => ExpAr a-> Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a))) 
 clean (Bin Sum (N 0) b) = outExpAr b 
 clean (Bin Sum a (N 0)) = outExpAr a 
@@ -1053,6 +1087,14 @@ clean exp = outExpAr exp
 gopt var = g_eval_exp var
 \end{code}
 
+\hspace*{-2cm}{
+\xymatrix@@R=2cm{
+ExpAr A\ar@@/^1pc/[rr]^-{out} \ar[d]_-{sd} & \hspace*{3cm}{\cong} & {\scriptstyle 1 + (A + (Binop,(ExpAr A , ExpAr A)) + (UnOp , ExpAr A)))} \ar@@/^1pc/[ll]^-{in} \ar[d]^-{recExpAr\ sd}\\
+(ExpAr A,ExpAr A) & & {\scriptscriptstyle 1 + (A + ((Binop,((ExpAr A , ExpAr A),(ExpAr A , ExpAr A))) + (Un Op , (ExpAr A , ExpAr A))))}\ar[ll]^-{sd\_gen}
+}
+}
+
+
 \begin{code}
 sd_gen :: Floating a => 
           Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) 
@@ -1060,20 +1102,29 @@ sd_gen :: Floating a =>
 sd_gen = either sd_x (either sd_n (either sd_binop sd_unop)) where
            sd_x _ = (X, N 1)
            sd_n x = (N x, N 0)
-           sd_binop (op, ((x1,y1), (x2,y2))) |op == Sum = ((Bin Sum x1 x2), (Bin Sum y1 y2))
-                                             |otherwise = ((Bin Product x1 x2), (Bin Sum (Bin Product x1 y2)(Bin Product y1 x2)))
-           sd_unop (op, (x, y)) | op == Negate = ((Un op x), (Un op y))
-                                | otherwise = (Un op x, Bin Product (Un op x) y)
+           sd_binop (op, ((x1,y1), (x2,y2))) 
+            |op == Sum = ((Bin Sum x1 x2), (Bin Sum y1 y2))
+            |otherwise = ((Bin Product x1 x2), (Bin Sum (Bin Product x1 y2)(Bin Product y1 x2)))
+           sd_unop (op, (x, y)) 
+            | op == Negate = ((Un op x), (Un op y))
+            | otherwise = (Un op x, Bin Product (Un op x) y)
 \end{code}
+
+\xymatrix@@R=3cm@@C=1cm{
+ExpAr A\ar@@/^1pc/[rr]^-{out} \ar[d]_-{ad} & \hspace*{3cm}{\cong} & { 1 + (A + ((Binop,(ExpAr A , ExpAr A)) + (UnOp , ExpAr A)))} \ar@@/^1pc/[ll]^-{in} \ar[d]^-{recExpAr\ ad}\\
+(A, A) & & {(1 + (A + ((Binop,((A , A),(A , A))) + (Un Op , (A , A)))))}\ar[ll]^-{ad\_gen}
+}
 
 \begin{code}
 ad_gen a = either ad_x (either ad_n (either ad_binop ad_unop)) where
            ad_x _ = (a,1)
            ad_n x = (x,0)
-           ad_binop (op, ((x1,y1), (x2,y2))) |op == Sum = (x1 + x2, y1 + y2)
-                                             |otherwise = (x1 * x2, (x1 * y2) + (y1 * x2))
-           ad_unop (op, (x, y)) | op == Negate = ((-1)*x, (-1)*y)
-                                | otherwise = (Prelude.exp(x), y * Prelude.exp(x))
+           ad_binop (op, ((x1,y1), (x2,y2))) 
+            |op == Sum = (x1 + x2, y1 + y2)
+            |otherwise = (x1 * x2, (x1 * y2) + (y1 * x2))
+           ad_unop (op, (x, y)) 
+            | op == Negate = ((-1)*x, (-1)*y)
+            | otherwise = (Prelude.exp(x), y * Prelude.exp(x))
 \end{code}
 
 \subsection*{Problema 2}
@@ -1100,14 +1151,18 @@ C_{n+1} = \frac{2(2n+1)}{n+2} C_n\\
 \end{array}
 \right. $$
 
-que pode ser deduzida em \catalan 1. \par
+\[    C_n = \frac{(2n)!}{(n+1)! (n)! } \Rightarrow C_{n-1} = \frac{(2(n-1))!}{(n)! (n-1)! } \]
+\[  \frac{C_n}{C_{n-1}} = \frac{(2n)(2n-1)(2n-2)!(n-1)!}{(n+1)n(n-1)!(2n-2)!} = \frac{2(2n-1)}{n+1}\]
+\[  \Rightarrow C_n = \frac{2(2n-1)}{n+1} C_{n-1}\]
+
+que pode ser deduzida \href{https://math.stackexchange.com/questions/337842/simplifying-catalan-number-recurrence-relation}{aqui}.
 
 Assim sendo, vamos começar a desmontar estas duas equações:
 
 $$ \left\{
 \begin{array}{lr}
 C(0) = 1\\
-C(n+1) = (h(n) / r(n)) * C(n) \\
+C(n+1) = (h(n) / r(n)) * C(n)
 \end{array}
 \right. $$
 
@@ -1143,6 +1198,7 @@ h(n+1) = h(n)+4
 \end{array}
 \right. $$
 
+\newline
 $$ \left\{
 \begin{array}{lr}
 r(0) = 2\\
@@ -1320,6 +1376,7 @@ avg_aux = cataList (either (const (0,0)) aux) where
 \end{code}
 Solução para árvores de tipo \LTree:
 \begin{eqnarray*}
+
 |avg_aux = cata (either b q)|
 %
 \just\equiv{ Definição de avg\textunderscore aux}
@@ -1329,12 +1386,13 @@ Solução para árvores de tipo \LTree:
 \just\equiv{ Resultado calculado em cima }
 %
      |split avg length = cata (split (either (p1 . b) (p1 . q)) (either (p2 . b) (p2 . q)))|
+%
 \just\equiv{ Lei 52 - Fokkinga e Functor de LTree: F f = id + $f^2$} 
 %
      |lcbr(
-     avg.in = either (p1 . b) (p1 . q) . (id + split avg length ^2)
+     avg.in = either (p1 . b) (p1 . q) . (id + (split avg length)^2)
      )(
-     length.in = either (p2 . b) (p2 . q) . (id + split avg length ^2)
+     length.in = either (p2 . b) (p2 . q) . (id + (split avg length)^2)
      )|
 %
 \just\equiv{ Definição de in para as LTree ([Leaf,Fork]) e Lei 22 - Absorção +} 
