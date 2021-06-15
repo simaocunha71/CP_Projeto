@@ -1558,13 +1558,13 @@ São dadas:
 \end{hscode}\resethooks
 
 O primeiro problema baseia-se em definir a função "saída" do tipo ExpAr.
-É nos dado tanto o tipo da função \ensuremath{\Varid{outExpAr}} como o do seu isomorfismo \ensuremath{\Varid{inExpAr}}, assim pudendo representar o seu diagrama.
+É-nos dado tanto o tipo da função \ensuremath{\Varid{outExpAr}} como o do seu isomorfismo \ensuremath{\Varid{inExpAr}}, sendo assim possível representar o seu diagrama.
 
 \xymatrix{
 ExpAr\ A \ar@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr A,ExpAr\ A))+ (UnOp,ExpAr\ A))) \ar@/^2pc/[ll]^-{in} 
 }
 
-Assim, conseguimos perceber de imediato a definição de \ensuremath{\Varid{outExpAr}}.
+Assim, conseguimos perceber de imediato a definição de \ensuremath{\Varid{outExpAr}}:
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1605,7 +1605,7 @@ A & & { (A,1) + ((A,A) + ((BinOp,(A,A)) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
 
 \textit{recExpAr eval\textunderscore exp} = id + id + id + eval\textunderscore exp + eval\textunderscore exp + id + eval\textunderscore exp
 
-Com a ajuda do diagrama chegamos ao seguinte gene.
+Com a ajuda do diagrama chegamos ao seguinte gene:
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1659,7 +1659,7 @@ A & & { (A,1) + ((A,A) + ((BinOp,(A,A)) + (UnOp,A)))}\ar[ll]^-{gopt}
 }
 }
 
-Seguindo o diagrama, chegamos à solução do clean. Como dissemos a solução do gene \ensuremath{\Varid{gopt}} (gene utilizado no catamorfismo do hilomorfismo), foi re-utilizara o gene do catamorfismo da questão anterior, \ensuremath{\Varid{g\char95 eval\char95 exp}}.
+Seguindo o diagrama, chegamos à solução do clean. Como dissemos, a solução do gene \ensuremath{\Varid{gopt}} (gene utilizado no catamorfismo do hilomorfismo), foi reutilizado o gene do catamorfismo da questão anterior, \ensuremath{\Varid{g\char95 eval\char95 exp}}.
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1690,7 +1690,10 @@ Seguindo o diagrama, chegamos à solução do clean. Como dissemos a solução d
 \ColumnHook
 \end{hscode}\resethooks
 
-Nesta questão era pedido que realizasse-mos uma função que fizesse a derivada de uma expressão, através de um catamorfismo. Percebemos através do enunciado que o gene devolvia um par, e que, a função principal só se aproveitava do segundo elemento. Com isso percebemos que o gene colocava a expressão intacta no primeiro elemento do par, e a sua derivada no segundo, para que quando aparece-se uma multiplicação conseguisse completar a derivada, já que esta precisa de parte da expressão antes de ser derivada. Depois de toda a análise, chegamos ao seguinte diagrama.
+Nesta questão, era pedido que realizássemos uma função que fizesse a derivada de uma expressão, através de um catamorfismo. 
+Percebemos através do enunciado que o gene devolvia um par, e que, a função principal só aproveitava o segundo elemento. 
+Com isso percebemos que o gene colocava a expressão intacta no primeiro elemento do par, e a sua derivada no segundo, para que quando aparece-se uma multiplicação conseguisse completar a derivada, já que esta precisa de parte da expressão antes de ser derivada. 
+Depois de toda a análise, chegamos ao seguinte diagrama:
 
 \hspace*{-2cm}{
 \xymatrix@R=2cm{
@@ -1699,7 +1702,7 @@ ExpAr A\ar@/^1pc/[rr]^-{out} \ar[d]_-{sd} & \hspace*{3cm}{\cong} & {\scriptstyle
 }
 }
 
-Através do diagrama, conseguimos concluir o seguinte gene.
+Através do diagrama, conseguimos concluir o seguinte gene:
 
 
 \begin{hscode}\SaveRestoreHook
@@ -1744,14 +1747,15 @@ Através do diagrama, conseguimos concluir o seguinte gene.
 \ColumnHook
 \end{hscode}\resethooks
 
-Esta questão é muito parecida à anterior, só que calculando a derivada com um valor para o x dado. Sendo assim, utilizamos do mesmo raciocinio e fizemos o seguinte diagrama.
+Esta questão é muito parecida à anterior, só que calculando a derivada com um valor para o x dado. 
+Sendo assim, utilizamos do mesmo raciocínio e fizemos o seguinte diagrama:
 
 \xymatrix@R=3cm@C=1cm{
 ExpAr A\ar@/^1pc/[rr]^-{out} \ar[d]_-{ad} & \hspace*{3cm}{\cong} & { 1 + (A + ((Binop,(ExpAr A , ExpAr A)) + (UnOp , ExpAr A)))} \ar@/^1pc/[ll]^-{in} \ar[d]^-{recExpAr\ ad}\\
 (A, A) & & {(1 + (A + ((Binop,((A , A),(A , A))) + (Un Op , (A , A)))))}\ar[ll]^-{ad\_gen}
 }
 
-Com o diagrama chegamos ao seguinte gene.
+Com o diagrama chegamos ao seguinte gene:
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1941,7 +1945,7 @@ Por último, a função \textit{proj} será constituída por um triplo com as fu
 \>[4]{}\Varid{h}\mathrel{=}\alt{\Varid{h1}}{\Varid{h2}}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{h1}\;\anonymous \;\anonymous \mathrel{=}\Varid{nil}{}\<[E]%
+\>[4]{}\Varid{h1}\;\anonymous \;\anonymous \mathrel{=}\underline{\Varid{nil}}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
 \>[4]{}\Varid{h2}\;(\Varid{h},\Varid{t})\;\Varid{l}\mathrel{=}\mathbf{case}\;\Varid{l}\;\mathbf{of}{}\<[E]%
@@ -2083,6 +2087,12 @@ Solução para listas não vazias:
 \ColumnHook
 \end{hscode}\resethooks
 
+Como dito no enunciado, o gene será um [b,q]. 
+Através da nossa demonstração, percebemos que o lado esquerdo do either (ou seja, b) será um either, 
+em que as suas alternativas serão funções constantes de 0 \texttt{(p1 (b l) = 0 e p2 (b l) = 0)}. 
+\par Já o seu lado direito, como podemos ver na demonstração, será apenas uma função que realiza tanto a média como o comprimento de uma lista através 
+do comprimento e da média do resto da lista, guardando no primeiro elemento de um par a média e no segundo o comprimento.
+
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{9}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -2133,7 +2143,7 @@ Solução para árvores de tipo \LTree:
       \ensuremath{\Varid{avg}\;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p1\;(\Varid{b}\;\Varid{lf})}\\
       \ensuremath{\Varid{avg}\;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p1\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2}))\;(\Varid{fl},\Varid{fr})}\\
       \ensuremath{\length \;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p2\;(\Varid{b}\;\Varid{lf})}\\
-      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr})\mathrel{=}\p2\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2}))\;(\Varid{fl},\Varid{fr}))}
+      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p2\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\mathbin{\uparrow}\mathrm{2}))\;(\Varid{fl},\Varid{fr}))}
   \end{array}
 \right
 %
@@ -2144,7 +2154,7 @@ Solução para árvores de tipo \LTree:
       \ensuremath{\Varid{avg}\;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p1\;(\Varid{b}\;\Varid{lf})}\\
       \ensuremath{\Varid{avg}\;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p1\;(\Varid{q}\;\conj{\Varid{avg}}{\length }\times\conj{\Varid{avg}}{\length })\;(\Varid{fl},\Varid{fr})}\\
       \ensuremath{\length \;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p2\;(\Varid{b}\;\Varid{lf})}\\
-      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr})\mathrel{=}\p2\;(\Varid{q}\;\conj{\Varid{avg}}{\length }\times\conj{\Varid{avg}}{\length })\;(\Varid{fl},\Varid{fr})}\\
+      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p2\;(\Varid{q}\;\conj{\Varid{avg}}{\length }\times\conj{\Varid{avg}}{\length })\;(\Varid{fl},\Varid{fr})}\\
   \end{array}
 \right
 %
@@ -2155,7 +2165,7 @@ Solução para árvores de tipo \LTree:
       \ensuremath{\Varid{avg}\;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p1\;(\Varid{b}\;\Varid{lf})}\\
       \ensuremath{\Varid{avg}\;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p1\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr}),\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr})))}\\
       \ensuremath{\length \;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p2\;(\Varid{b}\;\Varid{lf})}\\
-      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr})\mathrel{=}\p2\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr}),\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr})))}\\
+      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p2\;(\Varid{q}\;(\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr}),\conj{\Varid{avg}}{\length }\;(\Varid{fl},\Varid{fr})))}\\
   \end{array}
 \right
 %
@@ -2166,11 +2176,29 @@ Solução para árvores de tipo \LTree:
       \ensuremath{\Varid{avg}\;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p1\;(\Varid{b}\;\Varid{lf})}\\
       \ensuremath{\Varid{avg}\;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p1\;(\Varid{q}\;((\Varid{avg}\;\Varid{fl},\length \;\Varid{fr}),(\Varid{avg}\;\Varid{fl},\length \;\Varid{fr})))}\\
       \ensuremath{\length \;(\Conid{Leaf}\;\Varid{lf})\mathrel{=}\p2\;(\Varid{b}\;\Varid{lf})}\\
-      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr})\mathrel{=}\p2\;(\Varid{q}\;((\Varid{avg}\;\Varid{fl},\length \;\Varid{fr}),(\Varid{avg}\;\Varid{fl},\length \;\Varid{fr})))}\\
+      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p2\;(\Varid{q}\;((\Varid{avg}\;\Varid{fl},\length \;\Varid{fr}),(\Varid{avg}\;\Varid{fl},\length \;\Varid{fr})))}\\
+  \end{array}
+\right
+%
+\just\equiv{ avg (Leaf lf) = lf ; length (Leaf lf) = 1 }
+%
+\left\{
+   \begin{array}{llll}
+      \ensuremath{\Varid{lf}\mathrel{=}\p1\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\Varid{avg}\;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p1\;(\Varid{q}\;((\Varid{avg}\;\Varid{fl},\length \;\Varid{fr}),(\Varid{avg}\;\Varid{fl},\length \;\Varid{fr})))}\\
+      \ensuremath{\mathrm{1}\mathrel{=}\p2\;(\Varid{b}\;\Varid{lf})}\\
+      \ensuremath{\length \;(\Conid{Fork}\;(\Varid{fl},\Varid{fr}))\mathrel{=}\p2\;(\Varid{q}\;((\Varid{avg}\;\Varid{fl},\length \;\Varid{fr}),(\Varid{avg}\;\Varid{fl},\length \;\Varid{fr})))}\\
   \end{array}
 \right
 \qed
 \end{eqnarray*}
+
+
+Como dito no enunciado, o gene será um [b,q]. 
+Através da nossa demonstração, percebemos que o lado esquerdo do either (ou seja, b) será um par, 
+onde o lado esquerdo conservar-se-á um valor de uma Leaf, e no lado direito de b será o valor 1. 
+\par Já o seu lado direito do either, como podemos ver na demonstração, será apenas uma função que realiza 
+tanto a média como o comprimento de uma LTree, guardando no primeiro elemento de um par a média dos valores e no segundo o comprimento dos 2 ramos da árvore.
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%

@@ -1019,13 +1019,13 @@ ad v = p2 . cataExpAr (ad_gen v)
 \end{code}
 
 O primeiro problema baseia-se em definir a função "saída" do tipo ExpAr.
-É nos dado tanto o tipo da função |outExpAr| como o do seu isomorfismo |inExpAr|, assim pudendo representar o seu diagrama.
+É-nos dado tanto o tipo da função |outExpAr| como o do seu isomorfismo |inExpAr|, sendo assim possível representar o seu diagrama.
 
 \xymatrix{
 ExpAr\ A \ar@@/^2pc/[rr]^-{out} & {\cong} & 1 + (A + ((BinOp,(ExpAr A,ExpAr\ A))+ (UnOp,ExpAr\ A))) \ar@@/^2pc/[ll]^-{in} 
 }
 
-Assim, conseguimos perceber de imediato a definição de |outExpAr|.
+Assim, conseguimos perceber de imediato a definição de |outExpAr|:
 
 \begin{code}
 outExpAr :: ExpAr a-> Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a)))
@@ -1056,7 +1056,7 @@ A & & { (A,1) + ((A,A) + ((BinOp,(A,A)) + (UnOp,A)))}\ar[ll]^-{g\_eval\_exp}
 
 \textit{recExpAr eval\textunderscore exp} = id + id + id + eval\textunderscore exp + eval\textunderscore exp + id + eval\textunderscore exp
 
-Com a ajuda do diagrama chegamos ao seguinte gene.
+Com a ajuda do diagrama chegamos ao seguinte gene:
 
 \begin{code}
 g_eval_exp var = either g_eval_x (either g_eval_na (either g_eval_binop g_eval_unop)) 
@@ -1085,7 +1085,7 @@ A & & { (A,1) + ((A,A) + ((BinOp,(A,A)) + (UnOp,A)))}\ar[ll]^-{gopt}
 }
 }
 
-Seguindo o diagrama, chegamos à solução do clean. Como dissemos a solução do gene |gopt| (gene utilizado no catamorfismo do hilomorfismo), foi re-utilizara o gene do catamorfismo da questão anterior, |g_eval_exp|.
+Seguindo o diagrama, chegamos à solução do clean. Como dissemos, a solução do gene |gopt| (gene utilizado no catamorfismo do hilomorfismo), foi reutilizado o gene do catamorfismo da questão anterior, |g_eval_exp|.
 
 \begin{code}
 clean :: (Floating a, Eq a) => ExpAr a-> Either () (Either a (Either (BinOp, (ExpAr a, ExpAr a)) (UnOp, ExpAr a))) 
@@ -1103,7 +1103,10 @@ clean exp = outExpAr exp
 gopt var = g_eval_exp var
 \end{code}
 
-Nesta questão era pedido que realizasse-mos uma função que fizesse a derivada de uma expressão, através de um catamorfismo. Percebemos através do enunciado que o gene devolvia um par, e que, a função principal só se aproveitava do segundo elemento. Com isso percebemos que o gene colocava a expressão intacta no primeiro elemento do par, e a sua derivada no segundo, para que quando aparece-se uma multiplicação conseguisse completar a derivada, já que esta precisa de parte da expressão antes de ser derivada. Depois de toda a análise, chegamos ao seguinte diagrama.
+Nesta questão, era pedido que realizássemos uma função que fizesse a derivada de uma expressão, através de um catamorfismo. 
+Percebemos através do enunciado que o gene devolvia um par, e que, a função principal só aproveitava o segundo elemento. 
+Com isso percebemos que o gene colocava a expressão intacta no primeiro elemento do par, e a sua derivada no segundo, para que quando aparece-se uma multiplicação conseguisse completar a derivada, já que esta precisa de parte da expressão antes de ser derivada. 
+Depois de toda a análise, chegamos ao seguinte diagrama:
 
 \hspace*{-2cm}{
 \xymatrix@@R=2cm{
@@ -1112,7 +1115,7 @@ ExpAr A\ar@@/^1pc/[rr]^-{out} \ar[d]_-{sd} & \hspace*{3cm}{\cong} & {\scriptstyl
 }
 }
 
-Através do diagrama, conseguimos concluir o seguinte gene.
+Através do diagrama, conseguimos concluir o seguinte gene:
 
 
 \begin{code}
@@ -1130,14 +1133,15 @@ sd_gen = either sd_x (either sd_n (either sd_binop sd_unop)) where
             | otherwise = (Un op x, Bin Product (Un op x) y)
 \end{code}
 
-Esta questão é muito parecida à anterior, só que calculando a derivada com um valor para o x dado. Sendo assim, utilizamos do mesmo raciocinio e fizemos o seguinte diagrama.
+Esta questão é muito parecida à anterior, só que calculando a derivada com um valor para o x dado. 
+Sendo assim, utilizamos do mesmo raciocínio e fizemos o seguinte diagrama:
 
 \xymatrix@@R=3cm@@C=1cm{
 ExpAr A\ar@@/^1pc/[rr]^-{out} \ar[d]_-{ad} & \hspace*{3cm}{\cong} & { 1 + (A + ((Binop,(ExpAr A , ExpAr A)) + (UnOp , ExpAr A)))} \ar@@/^1pc/[ll]^-{in} \ar[d]^-{recExpAr\ ad}\\
 (A, A) & & {(1 + (A + ((Binop,((A , A),(A , A))) + (Un Op , (A , A)))))}\ar[ll]^-{ad\_gen}
 }
 
-Com o diagrama chegamos ao seguinte gene.
+Com o diagrama chegamos ao seguinte gene:
 
 \begin{code}
 ad_gen a = either ad_x (either ad_n (either ad_binop ad_unop)) where
@@ -1289,7 +1293,7 @@ Por último, a função \textit{proj} será constituída por um triplo com as fu
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
 calcLine = cataList h where
    h = either h1 h2
-   h1 _ _ = nil
+   h1 _ _ = const nil
    h2 (h,t) l = case l of 
                 [] -> nil 
                 (x:xs) -> \z -> concat $ (sequenceA [singl . linear1d h x, t xs]) z
@@ -1425,10 +1429,11 @@ Solução para listas não vazias:
 avg = p1.avg_aux
 \end{code}
 
-Como dito no enunciado, o gene será um either (b q). 
-Através da nossa demonstração, percebemos que o lado esquerdo do either (ou seja, b) será um either, em que as suas alternativas serão funções constantes de 0 (p1 (b l) = 0
- e p2 (b l) = 0). Já o seu lado direito, como podemos ver na demonstração, será apenas uma função que realiza tanto a média como o comprimento de uma lista através 
- do comprimento e da média do resto da lista, guardando no primeiro elemento de um par a média e no segundo o comprimento.
+Como dito no enunciado, o gene será um [b,q]. 
+Através da nossa demonstração, percebemos que o lado esquerdo do either (ou seja, b) será um either, 
+em que as suas alternativas serão funções constantes de 0 \texttt{(p1 (b l) = 0 e p2 (b l) = 0)}. 
+\par Já o seu lado direito, como podemos ver na demonstração, será apenas uma função que realiza tanto a média como o comprimento de uma lista através 
+do comprimento e da média do resto da lista, guardando no primeiro elemento de um par a média e no segundo o comprimento.
 
 \begin{code}
 avg_aux = cataList (either (const (0,0)) aux) where
@@ -1483,7 +1488,7 @@ Solução para árvores de tipo \LTree:
       |avg (Leaf lf) = p1 (b lf)|\\
       |avg (Fork (fl,fr)) = p1 (q (split avg length^2)) (fl,fr)|\\
       |length (Leaf lf) = p2 (b lf) |\\
-      |length (Fork (fl,fr) = p2 (q (split avg length^2)) (fl,fr))|
+      |length (Fork (fl,fr)) = p2 (q (split avg length^2)) (fl,fr))|
   \end{array}
 \right
 %
@@ -1494,7 +1499,7 @@ Solução para árvores de tipo \LTree:
       |avg (Leaf lf) = p1 (b lf)|\\
       |avg (Fork (fl,fr)) = p1 (q (split avg length) >< (split avg length)) (fl,fr)|\\
       |length (Leaf lf) = p2 (b lf) |\\
-      |length (Fork (fl,fr) = p2 (q (split avg length) >< (split avg length)) (fl,fr)|\\
+      |length (Fork (fl,fr)) = p2 (q (split avg length) >< (split avg length)) (fl,fr)|\\
   \end{array}
 \right
 %
@@ -1505,7 +1510,7 @@ Solução para árvores de tipo \LTree:
       |avg (Leaf lf) = p1 (b lf)|\\
       |avg (Fork (fl,fr)) = p1 (q ((split avg length) (fl,fr),(split avg length)(fl,fr)))|\\
       |length (Leaf lf) = p2 (b lf) |\\
-      |length (Fork (fl,fr) = p2 (q ((split avg length) (fl,fr),(split avg length)(fl,fr)))|\\
+      |length (Fork (fl,fr)) = p2 (q ((split avg length) (fl,fr),(split avg length)(fl,fr)))|\\
   \end{array}
 \right
 %
@@ -1516,11 +1521,29 @@ Solução para árvores de tipo \LTree:
       |avg (Leaf lf) = p1 (b lf)|\\
       |avg (Fork (fl,fr)) = p1 (q ((avg fl, length fr),(avg fl, length fr)))|\\
       |length (Leaf lf) = p2 (b lf) |\\
-      |length (Fork (fl,fr) = p2 (q ((avg fl, length fr),(avg fl, length fr)))|\\
+      |length (Fork (fl,fr)) = p2 (q ((avg fl, length fr),(avg fl, length fr)))|\\
+  \end{array}
+\right
+%
+\just\equiv{ avg (Leaf lf) = lf ; length (Leaf lf) = 1 }
+%
+\left\{
+   \begin{array}{llll}
+      |lf = p1 (b lf)|\\
+      |avg (Fork (fl,fr)) = p1 (q ((avg fl, length fr),(avg fl, length fr)))|\\
+      |1 = p2 (b lf) |\\
+      |length (Fork (fl,fr)) = p2 (q ((avg fl, length fr),(avg fl, length fr)))|\\
   \end{array}
 \right
 \qed
 \end{eqnarray*}
+
+
+Como dito no enunciado, o gene será um [b,q]. 
+Através da nossa demonstração, percebemos que o lado esquerdo do either (ou seja, b) será um par, 
+onde o lado esquerdo conservar-se-á um valor de uma Leaf, e no lado direito de b será o valor 1. 
+\par Já o seu lado direito do either, como podemos ver na demonstração, será apenas uma função que realiza 
+tanto a média como o comprimento de uma LTree, guardando no primeiro elemento de um par a média dos valores e no segundo o comprimento dos 2 ramos da árvore.
 
 \begin{code}
 avgLTree = p1.cataLTree gene where
