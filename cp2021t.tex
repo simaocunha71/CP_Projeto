@@ -1931,11 +1931,43 @@ Por último, a função \textit{proj} será constituída por um triplo com as fu
 
 
 \subsection*{Problema 3}
+\begin{eqnarray*}
+\start
+%
+	\ensuremath{\Varid{calcLine}\mathrel{=}\cata{\Varid{h}}}
+%
+\just\equiv{ Lei 45 - Universal-cata }
+%
+     \ensuremath{\Varid{calcLine}\comp \mathbf{in}\mathrel{=}\Varid{h}\comp \Conid{F}\;\Varid{calcLine}}
+%
+\just\equiv{ Definição de in para listas ([nil,cons]) e Functor das listas: F f = id + id x f}
+%
+     \ensuremath{\Varid{calcLine}\comp \alt{\Varid{nil}}{\Varid{cons}}\mathrel{=}\Varid{h}\comp (\Varid{id}\mathbin{+}\Varid{id}\times\Varid{f})}
+%
+\just\equiv{ Lei 20 - Fusão-+; h = [h1,h2] }
+%
+     \ensuremath{\alt{\Varid{calcLine}\comp \Varid{nil}}{\Varid{calcLine}\comp \Varid{cons}}\mathrel{=}\alt{\Varid{h1}}{\Varid{h2}}\comp (\Varid{id}\mathbin{+}\Varid{id}\times\Varid{f})}
+%
+\just\equiv{ Lei 22 - Absorção-+}
+%
+     \ensuremath{\alt{\Varid{calcLine}\comp \Varid{nil}}{\Varid{calcLine}\comp \Varid{cons}}\mathrel{=}\alt{\Varid{h1}\comp \Varid{id}}{\Varid{h2}\comp (\Varid{id}\times\Varid{calcLine})}}
+%
+\just\equiv{ Lei 27 - Eq-+}
+%
+     \ensuremath{\begin{lcbr}\Varid{calcLine}\comp \Varid{nil}\mathrel{=}\Varid{h1}\comp \Varid{id}\\\Varid{calcLine}\comp \Varid{cons}\mathrel{=}\Varid{h2}\comp (\Varid{id}\times\Varid{calcLine})\end{lcbr}}
+%
+\just\equiv{ Lei 1 - Natural-id; Lei 71 - Igualdade Extensional; Lei 72 - Def-comp}
+%
+     \ensuremath{\begin{lcbr}\Varid{calcLine}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}\Varid{h1}\\\Varid{calcLine}\;(\Varid{h}\mathbin{:}\Varid{t})\mathrel{=}\Varid{h2}\;(\Varid{h},\Varid{calcLine}\;\Varid{t})\end{lcbr}}
+\qed
+\end{eqnarray*}
+
+Segundo a nossa demonstração, podemos concluir que o gene da função \textit{calcLine} irá ser um either. 
+No entanto, não conseguimos transformar o código obtido em cima em código Haskell.
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{calcLine}\mathbin{::}\Conid{NPoint}\to (\Conid{NPoint}\to \Conid{OverTime}\;\Conid{NPoint}){}\<[E]%
 \\
@@ -1945,16 +1977,10 @@ Por último, a função \textit{proj} será constituída por um triplo com as fu
 \>[4]{}\Varid{h}\mathrel{=}\alt{\Varid{h1}}{\Varid{h2}}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{h1}\;\anonymous \;\anonymous \mathrel{=}\underline{\Varid{nil}}{}\<[E]%
+\>[4]{}\Varid{h1}\mathrel{=}\bot {}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{h2}\;(\Varid{h},\Varid{t})\;\Varid{l}\mathrel{=}\mathbf{case}\;\Varid{l}\;\mathbf{of}{}\<[E]%
-\\
-\>[4]{}\hsindent{13}{}\<[17]%
-\>[17]{}[\mskip1.5mu \mskip1.5mu]\to \Varid{nil}{}\<[E]%
-\\
-\>[4]{}\hsindent{13}{}\<[17]%
-\>[17]{}(\Varid{x}\mathbin{:}\Varid{xs})\to \lambda \Varid{z}\to \Varid{concat}\mathbin{\$}(\Varid{sequenceA}\;[\mskip1.5mu \Varid{singl}\comp \Varid{linear1d}\;\Varid{h}\;\Varid{x},\Varid{t}\;\Varid{xs}\mskip1.5mu])\;\Varid{z}{}\<[E]%
+\>[4]{}\Varid{h2}\mathrel{=}\bot {}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{deCasteljau}\mathbin{::}[\mskip1.5mu \Conid{NPoint}\mskip1.5mu]\to \Conid{OverTime}\;\Conid{NPoint}{}\<[E]%
 \\

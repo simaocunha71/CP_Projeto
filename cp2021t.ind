@@ -8,7 +8,7 @@
   \indexspace
 
   \item Combinador ``pointfree''
-    \subitem \emph  {cata}, \hyperpage{8, 9}, \hyperpage{17, 18}
+    \subitem \emph  {cata}, \hyperpage{8, 9}, \hyperpage{16--18}
     \subitem \emph  {either}, \hyperpage{3}, \hyperpage{8}, 
 		\hyperpage{13--19}
   \item Curvas de Bézier, \hyperpage{6, 7}

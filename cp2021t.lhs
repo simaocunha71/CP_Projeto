@@ -1288,15 +1288,54 @@ Por último, a função \textit{proj} será constituída por um triplo com as fu
 
 
 \subsection*{Problema 3}
+\begin{eqnarray*}
+\start
+%
+	|calcLine = cata h|
+%
+\just\equiv{ Lei 45 - Universal-cata }
+%
+     |calcLine. in = h . F calcLine|
+%
+\just\equiv{ Definição de in para listas ([nil,cons]) e Functor das listas: F f = id + id x f}
+%
+     |calcLine . either nil cons = h . (id + id >< f)|
+%
+\just\equiv{ Lei 20 - Fusão-+; h = [h1,h2] }
+%
+     |either (calcLine.nil) (calcLine.cons) = either (h1) (h2) . (id + id >< f)|
+%
+\just\equiv{ Lei 22 - Absorção-+}
+%
+     |either (calcLine . nil) (calcLine.cons) = either (h1.id) (h2.(id >< calcLine)) |
+%
+\just\equiv{ Lei 27 - Eq-+}
+%
+     |lcbr(
+     calcLine . nil = h1 . id
+     )(
+     calcLine . cons = h2 . (id >< calcLine)
+     )|
+%
+\just\equiv{ Lei 1 - Natural-id; Lei 71 - Igualdade Extensional; Lei 72 - Def-comp}
+%
+     |lcbr(
+     calcLine [] = h1 
+     )(
+     calcLine (h:t) = h2 (h, calcLine t)
+     )|
+\qed
+\end{eqnarray*}
+
+Segundo a nossa demonstração, podemos concluir que o gene da função \textit{calcLine} irá ser um either. 
+No entanto, não conseguimos transformar o código obtido em cima em código Haskell.
 
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
 calcLine = cataList h where
    h = either h1 h2
-   h1 _ _ = const nil
-   h2 (h,t) l = case l of 
-                [] -> nil 
-                (x:xs) -> \z -> concat $ (sequenceA [singl . linear1d h x, t xs]) z
+   h1 = undefined
+   h2 = undefined 
                 
 
 deCasteljau :: [NPoint] -> OverTime NPoint
